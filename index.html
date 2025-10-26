@@ -21,16 +21,16 @@
 
         <!-- Topo: Dados em caixa -->
         <div class="topo-caixa">
-            <div class="topo" style="display:flex; justify-content:space-between; gap:20px;">
+            <div class="topo" style="display:flex; justify-content:space-between; gap:10px; align-items:center;">
                 <div class="coluna">
-                    <label style="font-size:1.2rem;">Nome: <input id="nome" type="text" style="width:250px;font-size:1.1rem;"></label><br>
-                    <label style="font-size:1.2rem;">Idade: <input id="idade" type="number" min="0" style="width:250px;font-size:1.1rem;"></label><br>
-                    <label style="font-size:1.2rem;">Origem: <input id="origem" type="text" style="width:250px;font-size:1.1rem;"></label>
+                    <label style="font-size:1.2rem; margin-bottom:10px;">Nome: <input id="nome" type="text" style="width:250px;font-size:1.1rem;"></label><br>
+                    <label style="font-size:1.2rem; margin-bottom:10px;">Idade: <input id="idade" type="number" min="0" style="width:250px;font-size:1.1rem;"></label><br>
+                    <label style="font-size:1.2rem; margin-bottom:10px;">Origem: <input id="origem" type="text" style="width:250px;font-size:1.1rem;"></label>
                 </div>
                 <div class="coluna">
-                    <label style="font-size:1.2rem;">Ocupação: <input id="ocupacao" type="text" style="width:250px;font-size:1.1rem;"></label><br>
-                    <label style="font-size:1.2rem;">Marca: <input id="marca" type="text" style="width:250px;font-size:1.1rem;"></label><br>
-                    <label style="font-size:1.2rem;">Motivação: <input id="motivacao" type="text" style="width:250px;font-size:1.1rem;"></label>
+                    <label style="font-size:1.2rem; margin-bottom:10px;">Ocupação: <input id="ocupacao" type="text" style="width:250px;font-size:1.1rem;"></label><br>
+                    <label style="font-size:1.2rem; margin-bottom:10px;">Marca: <input id="marca" type="text" style="width:250px;font-size:1.1rem;"></label><br>
+                    <label style="font-size:1.2rem; margin-bottom:10px;">Motivação: <input id="motivacao" type="text" style="width:250px;font-size:1.1rem;"></label>
                 </div>
             </div>
         </div>
@@ -136,7 +136,7 @@
         <!-- Linhas: Equilíbrio e Exposição -->
         <div class="linhas">
             <label>Equilíbrio: <input id="equilibrio" type="range" min="-10" max="10" value="0"></label>
-            <div id="barra-equilibrio" style="position:relative;height:20px;margin:5px 0;"></div>
+            <div id="barra-equilibrio" style="position:relative;height:20px;margin:5px 0;background: linear-gradient(to right, #550000 0%, #000 50%, #fffacd 50%, #ffff00 100%);"></div>
 
             <label>Exposição: <input id="exposicao" type="range" min="0" max="10" value="0"></label>
             <div id="barra-exposicao" style="position:relative;height:20px;margin:5px 0;display:flex;"></div>
@@ -234,12 +234,4 @@
         </div>
 
         <div class="botoes">
-           <button id="btn-salvar">Salvar Ficha</button>
-           <button id="voltarSelecaoBtn" class="btn-voltar">Voltar</button>
-        </div>
-    </div>
-
-      <script type="module" src="script.js"></script>
-    
-</body>
-</html>
+           <button id="btn-sal
