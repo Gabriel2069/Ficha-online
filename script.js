@@ -1,5 +1,11 @@
 // Config Firebase (substitua pelas suas chaves)
-const firebaseConfig = { /* suas chaves */ };
+const firebaseConfig = {  apiKey: "AIzaSyD3Qssht7axuM8aE4gQL965EBZJo-qzmsU",
+    authDomain: "fichas-e87fd.firebaseapp.com",
+    projectId: "fichas-e87fd",
+    storageBucket: "fichas-e87fd.firebasestorage.app",
+    messagingSenderId: "496979447757",
+    appId: "1:496979447757:web:dc54dfdc358c558bc53e84",
+    measurementId: "G-VM3BG54LNE" };
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
