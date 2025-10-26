@@ -64,16 +64,22 @@ h1 {
 }
 
 /* ===== BARRAS ===== */
+.barras {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
 .barra-container {
   position: relative;
-  width: 100%;
-  height: 22px;
+  width: 180px;
+  height: 24px;
   background-color: #1a1a1d;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 0 10px rgba(127, 28, 255, 0.3);
   transition: 0.3s;
-  margin-top: 5px;
 }
 
 .barra {
@@ -82,10 +88,10 @@ h1 {
   transition: width 0.5s ease, background 0.5s ease;
 }
 
+/* Gradientes suaves e modernos */
 .vermelha { background: linear-gradient(to right, #330000, #ff0000); }
 .roxa { background: linear-gradient(to right, #150022, #a200ff); }
 .verde { background: linear-gradient(to right, #002200, #00ff73); }
-
 /* ===== VALOR NUMÉRICO NAS BARRAS ===== */
 .barra-container input {
   width: 45px;
