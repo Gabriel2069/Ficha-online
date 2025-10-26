@@ -225,6 +225,19 @@ function salvarFicha() {
     if (el) data[id] = el.value;
   });
 
+   // Salva todas as perícias dinamicamente
+  const periciasDiv = document.querySelectorAll('.pericias .coluna-pericia');
+  periciasDiv.forEach(coluna => {
+    const categoria = coluna.querySelector('h3').innerText.match(/\((\w+)\)/)[1]; // pega COR, MEN, INS...
+    const inputs = coluna.querySelectorAll('input');
+    data[categoria] = {}; // cria objeto para cada categoria
+    inputs.forEach((input, idx) => {
+      // nome da perícia é o label antes do input
+      const label = input.previousSibling.textContent.trim().replace(':','');
+      data[categoria][label] = input.value;
+    });
+  });
+  
   // Adiciona o campo owner para controle de acesso
   data.owner = user.uid;
 
@@ -234,19 +247,21 @@ function salvarFicha() {
     .catch(err => showNotification("Erro ao salvar: " + err.message, "error"));
 }
 
+// ======= VOLTAR PARA SELEÇÃO =======
+function voltarParaSelecao() {
+  document.getElementById('fichaContainer').style.display = 'none';
+  showFichaList();
+}
+
 function showFicha() {
   document.getElementById('auth').style.display = 'none';
   document.getElementById('ficha').style.display = 'block';
 }
 
+// ======= LISTENERS =======
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById('btn-login').addEventListener('click', login);
   document.getElementById('btn-signup').addEventListener('click', signup);
   document.getElementById('btn-salvar').addEventListener('click', salvarFicha);
-  document.getElementById("voltarSelecaoBtn").addEventListener("click", () => {
-    // Esconde a página da ficha e mostra a tela de seleção
-    document.getElementById("fichaContainer").style.display = "none";
-    document.getElementById("fichasContainer").style.display = "block";
-  }); // ← fechamento da função do botão
-  
-}); // ← fechamento da função DOMContentLoaded
+  document.getElementById('voltarSelecaoBtn').addEventListener('click', voltarParaSelecao);
+});
