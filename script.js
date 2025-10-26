@@ -230,10 +230,6 @@ function updateBarraVisual(tipo) {
   barra.style.width = `${percent}%`;
 }
 
-  // Atualiza barras
-  updateBarras();
-
-
 // === Atualiza barras coloridas ===
 function updateBarra(tipo) {
   const atual = parseInt(document.getElementById(`${tipo}-atual`).value)||0;
