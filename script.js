@@ -17,8 +17,14 @@ const db = getFirestore(app);
 
 // Login/Signup
 function signup() {
-  createUserWithEmailAndPassword(auth, email.value, password.value)
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+
+console.log("Tentando cadastrar:", emailInput.value);
+  
+  createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
     .then(() => {
+      alert("Conta criada com sucesso!");
       showFicha(); // mostra a ficha após cadastro
     })
     .catch(error => {
@@ -28,14 +34,19 @@ function signup() {
 }
 
 function login() {
-  signInWithEmailAndPassword(auth, email.value, password.value)
-    .then(() => showFicha())
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+
+  signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+    .then(() => {
+      alert("Login bem-sucedido!");
+      showFicha();
+    })
     .catch(error => {
       console.error("Erro ao fazer login:", error.message);
       alert("Erro ao fazer login: " + error.message);
     });
 }
-
 // Carregar ficha
 onAuthStateChanged(auth, user => {
   if (user) {
