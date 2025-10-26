@@ -23,14 +23,14 @@
         <div class="topo-caixa">
             <div class="topo">
                 <div class="coluna">
-                    <label>Nome: <input id="nome" type="text" style="width:200px;"></label><br>
-                    <label>Idade: <input id="idade" type="number" min="0" style="width:200px;"></label><br>
-                    <label>Origem: <input id="origem" type="text" style="width:200px;"></label>
+                    <label style="font-size:1.2rem;">Nome: <input id="nome" type="text" style="width:250px;font-size:1.1rem;"></label><br>
+                    <label style="font-size:1.2rem;">Idade: <input id="idade" type="number" min="0" style="width:250px;font-size:1.1rem;"></label><br>
+                    <label style="font-size:1.2rem;">Origem: <input id="origem" type="text" style="width:250px;font-size:1.1rem;"></label>
                 </div>
                 <div class="coluna">
-                    <label>Ocupação: <input id="ocupacao" type="text" style="width:200px;"></label><br>
-                    <label>Marca: <input id="marca" type="text" style="width:200px;"></label><br>
-                    <label>Motivação: <input id="motivacao" type="text" style="width:200px;"></label>
+                    <label style="font-size:1.2rem;">Ocupação: <input id="ocupacao" type="text" style="width:250px;font-size:1.1rem;"></label><br>
+                    <label style="font-size:1.2rem;">Marca: <input id="marca" type="text" style="width:250px;font-size:1.1rem;"></label><br>
+                    <label style="font-size:1.2rem;">Motivação: <input id="motivacao" type="text" style="width:250px;font-size:1.1rem;"></label>
                 </div>
             </div>
         </div>
@@ -39,19 +39,38 @@
         <div class="meio-geral" style="display:flex; justify-content:space-between; align-items:flex-start; gap:20px;">
             <!-- Esquerda: PV e SAN em quadrados -->
             <div class="coluna-lateral">
-                <div class="criterio-card pv-card">
+                <div class="criterio-card pv-card" style="margin-bottom:10px;">
                     <h2>Pontos de Vida</h2>
                     <input id="pv-atual" class="pequeno-input" type="number" onchange="updateBarraVisual('pv')"> / 
                     <input id="pv-max" class="pequeno-input" type="number" readonly>
                     <div class="barra-container"><div id="barra-pv" class="barra pv"></div></div>
                     <input id="pv-mod" class="pequeno-input" type="number" placeholder="Mod" maxlength="3" onchange="updateCalculos()" style="margin-top:5px;">
                 </div>
-                <div class="criterio-card san-card">
+                <div class="criterio-card san-card" style="margin-bottom:10px;">
                     <h2>Sanidade</h2>
                     <input id="san-atual" class="pequeno-input" type="number" onchange="updateBarraVisual('san')"> / 
                     <input id="san-max" class="pequeno-input" type="number" readonly>
                     <div class="barra-container"><div id="barra-san" class="barra san"></div></div>
                     <input id="san-mod" class="pequeno-input" type="number" placeholder="Mod" maxlength="3" onchange="updateCalculos()" style="margin-top:5px;">
+                </div>
+                <!-- Quadro abaixo de Sanidade -->
+                <div class="sanidade-extra">
+                    <div class="linha-extra">
+                        <span>Morrendo</span>
+                        <div class="bolinhas">
+                            <div class="morrendo-bolinha"></div>
+                            <div class="morrendo-bolinha"></div>
+                            <div class="morrendo-bolinha"></div>
+                        </div>
+                    </div>
+                    <div class="linha-extra">
+                        <span>Enlouquecendo</span>
+                        <div class="bolinhas">
+                            <div class="enlouquecendo-bolinha"></div>
+                            <div class="enlouquecendo-bolinha"></div>
+                            <div class="enlouquecendo-bolinha"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -86,30 +105,30 @@
                     </circle>
                 </svg>
                 <div class="atributos" style="text-align:center;">
-                    COR - MEN - INS - PRE - CON
+                    <span style="font-size:1.2rem;">COR - MEN - INS - PRE - CON</span>
                     <br>
-                    <input id="cor-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:30px;">
-                    <input id="men-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:30px;">
-                    <input id="ins-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:30px;">
-                    <input id="pre-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:30px;">
-                    <input id="con-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:30px;">
+                    <input id="cor-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:40px;font-size:1.1rem;">
+                    <input id="men-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:40px;font-size:1.1rem;">
+                    <input id="ins-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:40px;font-size:1.1rem;">
+                    <input id="pre-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:40px;font-size:1.1rem;">
+                    <input id="con-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:40px;font-size:1.1rem;">
                 </div>
             </div>
 
             <!-- Direita: PE e DEF em quadrados -->
             <div class="coluna-lateral">
-                <div class="criterio-card pe-card">
+                <div class="criterio-card pe-card" style="margin-bottom:10px;">
                     <h2>Pontos de Esforço</h2>
                     <input id="pe-atual" class="pequeno-input" type="number" onchange="updateBarraVisual('pe')"> / 
                     <input id="pe-max" class="pequeno-input" type="number" readonly>
                     <div class="barra-container"><div id="barra-pe" class="barra pe"></div></div>
                     <input id="pe-mod" class="pequeno-input" type="number" placeholder="Mod" maxlength="3" onchange="updateCalculos()" style="margin-top:5px;">
                 </div>
-                <div class="criterio-card def-card">
+                <div class="criterio-card def-card" style="margin-bottom:10px;">
                     <h2>Defesa</h2>
                     <div id="defesa-val" class="defesa-circle">10</div> + 
-                    <input id="def-equip" class="pequeno-input" type="number"> (equipamento) + 
-                    <input id="def-bonus" class="pequeno-input" type="number"> (bônus)
+                    <input id="def-equip" class="pequeno-input" type="number" placeholder="Mod" maxlength="3" onchange="updateCalculos()" style="margin-top:5px;"> + 
+                    <input id="def-bonus" class="pequeno-input" type="number" placeholder="Mod" maxlength="3" onchange="updateCalculos()" style="margin-top:5px;">
                 </div>
             </div>
         </div>
@@ -223,4 +242,3 @@
     <script type="module" src="script.js"></script>
 </body>
 </html>
-
