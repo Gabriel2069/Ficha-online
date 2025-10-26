@@ -171,7 +171,8 @@ function updateCalculos() {
   const ins = limitarAtributo(+document.getElementById('ins-val').value);
   const pre = limitarAtributo(+document.getElementById('pre-val').value);
   const con = limitarAtributo(+document.getElementById('con-val').value);
-  const exp = +document.getElementById('exposicao').value || 0;
+  const exp = Math.min(+document.getElementById('exposicao').value, 10); // Limita a 10
+  document.getElementById('exposicao').value = exp; // Garante no slider
 
   document.getElementById('cor-val').value = cor;
   document.getElementById('men-val').value = men;
@@ -179,16 +180,12 @@ function updateCalculos() {
   document.getElementById('pre-val').value = pre;
   document.getElementById('con-val').value = con;
 
-  // Sincroniza os valores das bolas do pentágono com os atributos abaixo
-  document.querySelectorAll('.atributos input').forEach(input => {
-    switch(input.id){
-      case 'cor-input': input.value = cor; break;
-      case 'men-input': input.value = men; break;
-      case 'ins-input': input.value = ins; break;
-      case 'pre-input': input.value = pre; break;
-      case 'con-input': input.value = con; break;
-    }
-  });
+  // Sincroniza os valores das bolas do pentágono com os inputs extras
+  document.getElementById('cor-input').value = cor;
+  document.getElementById('men-input').value = men;
+  document.getElementById('ins-input').value = ins;
+  document.getElementById('pre-input').value = pre;
+  document.getElementById('con-input').value = con;
 
   const expMap = [
     {pv:15, san:15, pe:5, def:10},
@@ -204,9 +201,12 @@ function updateCalculos() {
   ];
 
   const maxVals = expMap[exp] || expMap[0];
-  document.getElementById('pv-max').value = maxVals.pv + 2*cor;
-  document.getElementById('san-max').value = maxVals.san + 2*men;
-  document.getElementById('pe-max').value = maxVals.pe + 2*con;
+  const pvMod = +document.getElementById('pv-mod').value || 0;
+  const sanMod = +document.getElementById('san-mod').value || 0;
+  const peMod = +document.getElementById('pe-mod').value || 0;
+  document.getElementById('pv-max').value = maxVals.pv + 2*cor + pvMod;
+  document.getElementById('san-max').value = maxVals.san + 2*men + sanMod;
+  document.getElementById('pe-max').value = maxVals.pe + 2*con + peMod;
 
   updateDefesa();
   updateBarraVisual('pv');
@@ -248,13 +248,14 @@ function updateBarras() {
 function updateEquilibrio() {
   const val = parseInt(document.getElementById('equilibrio').value) || 0;
   const barra = document.getElementById('barra-equilibrio');
-  const percent = ((val + 10) / 20) * 100;  // De -10 a 10, mapeia para 0-100%
-  barra.style.background = `linear-gradient(to right, #550000 0%, #000 ${50 - percent/2}%, #fffacd ${50 + percent/2}%, #ffff00 100%)`;  // Vermelho/preto esquerda, amarelo/branco neon direita
+  const percent = ((val + 10) / 20) * 100;  // 0% no centro (-10), 100% na direita (+10)
+  barra.style.background = `linear-gradient(to right, #550000 0%, #000 ${50 - percent/2}%, #fffacd ${50 + percent/2}%, #ffff00 100%)`;  // Meio a meio no centro, vermelho esquerda, amarelo direita
 }
 
 function updateExposicao() {
   updateCalculos();
-  const val = parseInt(document.getElementById('exposicao').value) || 0;
+  const val = Math.min(parseInt(document.getElementById('exposicao').value) || 0, 10); // Limita a 10
+  document.getElementById('exposicao').value = val;
   const barra = document.getElementById('barra-exposicao');
   barra.innerHTML = '';  // Limpa
   for (let i = 0; i < 10; i++) {
