@@ -31,41 +31,49 @@ h1 {
 /* ===== TOPO ===== */
 .topo {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 100%;
-  max-width: 900px;
-  margin-bottom: 30px;
+  max-width: 950px;
+  margin-bottom: 40px;
   animation: fadeIn 1.2s ease-in;
+  flex-wrap: wrap;
 }
 
-.coluna {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.meio {
+.criterio-card {
+  background: rgba(20, 20, 30, 0.85);
+  border: 1px solid rgba(127, 28, 255, 0.3);
+  border-radius: 14px;
+  width: 200px;
+  padding: 15px;
+  margin: 10px;
+  box-shadow: 0 0 15px rgba(127, 28, 255, 0.25);
+  transition: all 0.3s ease;
   text-align: center;
 }
 
-/* ===== BARRAS ===== */
-.barras {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin-top: 15px;
+.criterio-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 25px rgba(127, 28, 255, 0.4);
 }
 
+.criterio-card h2 {
+  font-size: 1.1rem;
+  color: #d8d8d8;
+  margin-bottom: 10px;
+  text-shadow: 0 0 5px #7f1cff;
+}
+
+/* ===== BARRAS ===== */
 .barra-container {
   position: relative;
-  width: 180px;
-  height: 24px;
+  width: 100%;
+  height: 22px;
   background-color: #1a1a1d;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 0 10px rgba(127, 28, 255, 0.3);
   transition: 0.3s;
+  margin-top: 5px;
 }
 
 .barra {
@@ -74,10 +82,45 @@ h1 {
   transition: width 0.5s ease, background 0.5s ease;
 }
 
-/* Gradientes suaves e modernos */
 .vermelha { background: linear-gradient(to right, #330000, #ff0000); }
 .roxa { background: linear-gradient(to right, #150022, #a200ff); }
 .verde { background: linear-gradient(to right, #002200, #00ff73); }
+
+/* ===== VALOR NUMÉRICO NAS BARRAS ===== */
+.barra-container input {
+  width: 45px;
+  padding: 3px;
+  background: #121214;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  text-align: center;
+  margin: 5px;
+  font-size: 0.85rem;
+}
+
+/* ===== DEFESA CÍRCULO ===== */
+.defesa-circle {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: conic-gradient(from 180deg, #00bfff, #0047ff, #002b80);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px #007fff;
+  box-shadow: 0 0 20px rgba(0, 120, 255, 0.4);
+  transition: all 0.4s ease;
+}
+
+.defesa-circle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0, 160, 255, 0.7);
+}
 
 /* ===== EQUILÍBRIO E EXPOSIÇÃO ===== */
 #barra-equilibrio {
@@ -118,8 +161,6 @@ h1 {
 
 .pentagono {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
@@ -128,12 +169,6 @@ h1 {
   transition: 0.4s;
 }
 
-.pentagono:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 15px rgba(127, 28, 255, 0.5);
-}
-
-/* Atributos nas pontas */
 .atributo {
   position: absolute;
   width: 40px;
@@ -146,12 +181,6 @@ h1 {
   text-align: center;
   line-height: 38px;
   box-shadow: 0 0 10px rgba(127, 28, 255, 0.4);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.atributo:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(160, 50, 255, 0.8);
 }
 
 /* ===== PERÍCIAS ===== */
@@ -159,7 +188,7 @@ h1 {
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
-  gap: 15px;
+  gap: 10px;
   margin-top: 40px;
   animation: fadeInUp 1.2s ease;
 }
@@ -168,34 +197,29 @@ h1 {
   background: rgba(20, 20, 25, 0.7);
   border: 1px solid rgba(127, 28, 255, 0.3);
   border-radius: 10px;
-  padding: 15px;
-  width: 160px;
+  padding: 12px;
+  width: 140px;
   text-align: center;
   box-shadow: 0 0 10px rgba(127, 28, 255, 0.2);
   transition: 0.3s;
 }
 
-.coluna-pericia:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 20px rgba(127, 28, 255, 0.4);
-}
-
 .coluna-pericia label {
   display: block;
-  font-size: 0.9rem;
-  color: #ddd;
-  margin-bottom: 5px;
+  font-size: 0.8rem;
+  color: #ccc;
+  margin-bottom: 4px;
 }
 
 .coluna-pericia input {
-  width: 60px;
-  padding: 6px;
+  width: 40px;
+  padding: 4px;
   border: none;
   border-radius: 6px;
   background: #1a1a1f;
   color: #fff;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   outline: none;
   transition: 0.3s;
 }
