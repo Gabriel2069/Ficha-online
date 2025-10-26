@@ -35,18 +35,20 @@
 
         <!-- Meio: Coluna esquerda, pentágono, coluna direita -->
         <div class="meio-geral" style="display:flex; justify-content:space-between; align-items:flex-start; gap:20px;">
-            <!-- Esquerda: PE e Defesa -->
+            <!-- Esquerda: PE e Defesa em quadrados -->
             <div class="coluna-lateral">
-                <label>Pontos de Esforço: 
+                <div class="criterio-card">
+                    <h2>Pontos de Esforço</h2>
                     <input id="pe-atual" class="pequeno-input" type="number" onchange="updateBarraVisual('pe')"> / 
                     <input id="pe-max" class="pequeno-input" type="number" readonly>
-                    <div id="barra-pe" class="barra pe"></div>
-                </label><br>
-                <label>Defesa: 
-                    <div id="defesa-val" class="escudo">10</div> + 
+                    <div class="barra-container"><div id="barra-pe" class="barra pe"></div></div>
+                </div>
+                <div class="criterio-card">
+                    <h2>Defesa</h2>
+                    <div id="defesa-val" class="defesa-circle">10</div> + 
                     <input id="def-equip" class="pequeno-input" type="number"> (equipamento) + 
                     <input id="def-bonus" class="pequeno-input" type="number"> (bônus)
-                </label>
+                </div>
             </div>
 
             <!-- Pentágono central -->
@@ -81,21 +83,29 @@
                 </svg>
                 <div class="atributos">
                     COR - MEN - INS - PRE - CON
+                    <br>
+                    <input id="cor-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:30px;">
+                    <input id="men-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:30px;">
+                    <input id="ins-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:30px;">
+                    <input id="pre-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:30px;">
+                    <input id="con-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:30px;">
                 </div>
             </div>
 
-            <!-- Direita: PV e SAN -->
+            <!-- Direita: PV e SAN em quadrados -->
             <div class="coluna-lateral">
-                <label>Pontos de Vida: 
+                <div class="criterio-card">
+                    <h2>Pontos de Vida</h2>
                     <input id="pv-atual" class="pequeno-input" type="number" onchange="updateBarraVisual('pv')"> / 
                     <input id="pv-max" class="pequeno-input" type="number" readonly>
-                    <div id="barra-pv" class="barra pv"></div>
-                </label><br>
-                <label>Sanidade: 
+                    <div class="barra-container"><div id="barra-pv" class="barra pv"></div></div>
+                </div>
+                <div class="criterio-card">
+                    <h2>Sanidade</h2>
                     <input id="san-atual" class="pequeno-input" type="number" onchange="updateBarraVisual('san')"> / 
                     <input id="san-max" class="pequeno-input" type="number" readonly>
-                    <div id="barra-san" class="barra san"></div>
-                </label>
+                    <div class="barra-container"><div id="barra-san" class="barra san"></div></div>
+                </div>
             </div>
         </div>
 
@@ -105,7 +115,7 @@
             <div id="barra-equilibrio" style="position:relative;height:20px;margin:5px 0;"></div>
 
             <label>Exposição: <input id="exposicao" type="range" min="0" max="10" value="0"></label>
-            <div id="barra-exposicao" style="position:relative;height:20px;margin:5px 0;"></div>
+            <div id="barra-exposicao" style="position:relative;height:20px;margin:5px 0;display:flex;"></div>
         </div>
 
         <!-- Perícias -->
@@ -147,7 +157,6 @@
 
            <div class="coluna-pericia"><h3>Conhecimento (CON)</h3>
              <label>Investigação: <input type="number"></label><br>
-             <label>Sobrenatural: <input type="number"></label><br>
              <label>Ciências: <input type="number"></label><br>
              <label>Tecnologia: <input type="number"></label><br>
              <label>Crime: <input type="number"></label><br>
