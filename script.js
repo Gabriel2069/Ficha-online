@@ -249,7 +249,7 @@ function salvarFicha() {
 
 // ======= VOLTAR PARA SELEÇÃO =======
 function voltarParaSelecao() {
-  document.getElementById('fichaContainer').style.display = 'none';
+  document.getElementById('ficha').style.display = 'none';
   showFichaList();
 }
 
