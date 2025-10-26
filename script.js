@@ -1,5 +1,7 @@
-// Config Firebase (substitua pelas suas chaves)
-const firebaseConfig = { apiKey: "AIzaSyD3Qssht7axuM8aE4gQL965EBZJo-qzmsU",
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+const firebaseConfig = { 
+    apiKey: "AIzaSyD3Qssht7axuM8aE4gQL965EBZJo-qzmsU",
     authDomain: "fichas-e87fd.firebaseapp.com",
     projectId: "fichas-e87fd",
     storageBucket: "fichas-e87fd.firebasestorage.app",
