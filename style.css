@@ -133,14 +133,6 @@ button:hover {
     font-weight: bold;
 }
 
-/* === Inputs pequenos para PV, SAN, PE, Defesa === */
-.pequeno-input {
-    width: 60px;
-    padding: 3px 5px;
-    font-size: 14px;
-    text-align: center;
-}
-
 /* === Barras principais (PV, SAN, PE) === */
 .barra {
     height: 20px;
@@ -158,6 +150,13 @@ button:hover {
     transform: translate(-50%, -50%);
     color: #fff;
     font-weight: bold;
+}
+
+.pequeno-input {
+    width: 60px;
+    padding: 3px 5px;
+    font-size: 14px;
+    text-align: center;
 }
 
 .barra.pv { background: linear-gradient(to right, #800000 0%, #ff4040 100%); }
@@ -178,56 +177,52 @@ button:hover {
     margin-right: 5px;
 }
 
-/* === barras de sliders === */
+/* === Linhas de sliders === */
+.linhas {
+    margin: 30px 0;
+}
 
-/* Equilíbrio - metade esquerda vermelho/preto, metade direita amarelo/branco neon */
+input[type=range] {
+    width: 100%;
+    margin: 10px 0;
+    -webkit-appearance: none;
+    background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    background: #6f00ff;
+    cursor: pointer;
+    margin-top: -4px;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    height: 10px;
+    border-radius: 10px;
+    background: #555;
+}
+
+#barra-equilibrio, #barra-exposicao {
+    height: 20px;
+    border-radius: 10px;
+    position: relative;
+}
+
 #barra-equilibrio {
-    height: 20px;
-    border-radius: 10px;
-    background: linear-gradient(to right, #b30000 50%, #000 50%, #f0ff00 50%, #fff 50%);
-    position: relative;
-    overflow: hidden;
+    background: linear-gradient(to right, #b30000 0%, #444 50%, #f0e68c 100%);
 }
 
-#barra-equilibrio::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%; /* ponto inicial da bolinha */
-    height: 100%;
-    width: 50%;
-    background: linear-gradient(to right, #b30000, #000); /* lado esquerdo preenchido */
-    transform-origin: left center;
-    transition: width 0.2s ease;
-}
-
-#barra-equilibrio::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 50%; /* ponto inicial da bolinha */
-    height: 100%;
-    width: 50%;
-    background: linear-gradient(to right, #f0ff00, #fff); /* lado direito preenchido */
-    transform-origin: right center;
-    transition: width 0.2s ease;
-}
-
-/* Exposição - tipo barra de experiência */
 #barra-exposicao {
-    height: 20px;
-    border-radius: 10px;
-    background: #333;
-    position: relative;
-    overflow: hidden;
-}
-
-#barra-exposicao .fill {
-    height: 100%;
-    width: 0%; /* inicial */
-    background: linear-gradient(90deg, #6f00ff, #ff00ff);
-    border-radius: 10px 0 0 10px;
-    transition: width 0.2s ease;
+    background: repeating-linear-gradient(
+        45deg,
+        #111 0%,
+        #333 10%,
+        #6f00ff 10%,
+        #6f00ff 15%
+    );
 }
 
 /* === Perícias === */
@@ -357,14 +352,15 @@ button:hover {
   font-weight: bold;
 }
 
-/* ====== Botões principais ====== */
+  font-size: 3em;
+
 .botoes {
   display: flex;
   gap: 10px;
   margin-top: 15px;
 }
 
-#btn-salvar,
+#salvarFichaBtn,
 #voltarSelecaoBtn {
   background-color: #4CAF50;
   color: white;
@@ -376,7 +372,7 @@ button:hover {
   transition: background-color 0.2s ease;
 }
 
-#btn-salvar:hover {
+#salvarFichaBtn:hover {
   background-color: #45a049;
 }
 
@@ -386,4 +382,9 @@ button:hover {
 
 #voltarSelecaoBtn:hover {
   background-color: #333;
+}
+
+  color: #6f00ff;
+  font-weight: bold;
+  border: 2px dashed #6f00ff;
 }
