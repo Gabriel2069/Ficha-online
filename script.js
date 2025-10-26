@@ -247,5 +247,5 @@ document.addEventListener("DOMContentLoaded", () => {
   // Esconde a página da ficha e mostra a tela de seleção
   document.getElementById("fichaContainer").style.display = "none";
   document.getElementById("fichasContainer").style.display = "block";
-
+ });
 });
