@@ -21,7 +21,7 @@
 
         <!-- Topo: Dados em caixa -->
         <div class="topo-caixa">
-            <div class="topo">
+            <div class="topo" style="display:flex; justify-content:space-between; gap:20px;">
                 <div class="coluna">
                     <label style="font-size:1.2rem;">Nome: <input id="nome" type="text" style="width:250px;font-size:1.1rem;"></label><br>
                     <label style="font-size:1.2rem;">Idade: <input id="idade" type="number" min="0" style="width:250px;font-size:1.1rem;"></label><br>
@@ -107,11 +107,11 @@
                 <div class="atributos" style="text-align:center;">
                     <span style="font-size:1.2rem;">COR - MEN - INS - PRE - CON</span>
                     <br>
-                    <input id="cor-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:40px;font-size:1.1rem;">
-                    <input id="men-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:40px;font-size:1.1rem;">
-                    <input id="ins-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:40px;font-size:1.1rem;">
-                    <input id="pre-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:40px;font-size:1.1rem;">
-                    <input id="con-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:40px;font-size:1.1rem;">
+                    <input id="cor-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:50px;font-size:1.1rem;">
+                    <input id="men-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:50px;font-size:1.1rem;">
+                    <input id="ins-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:50px;font-size:1.1rem;">
+                    <input id="pre-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:50px;font-size:1.1rem;">
+                    <input id="con-input" type="number" min="0" max="6" maxlength="2" onchange="updateCalculos()" style="width:50px;font-size:1.1rem;">
                 </div>
             </div>
 
@@ -145,46 +145,46 @@
         <!-- Perícias -->
         <div class="pericias">
            <div class="coluna-pericia"><h3>Corpo (COR)</h3>
-             <label>Acrobacia: <input type="number" style="float:right;"></label><br>
-             <label>Atletismo: <input type="number" style="float:right;"></label><br>
-             <label>Luta: <input type="number" style="float:right;"></label><br>
-             <label>Fortitude: <input type="number" style="float:right;"></label><br>
-             <label>Furtividade: <input type="number" style="float:right;"></label>
+             <label>Acrobacia: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Atletismo: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Luta: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Fortitude: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Furtividade: <input type="number" placeholder="+" style="float:right;"></label>
            </div>
 
            <div class="coluna-pericia"><h3>Mente (MEN)</h3>
-             <label>Rituais: <input type="number" style="float:right;"></label><br>
-             <label>Medicina: <input type="number" style="float:right;"></label><br>
-             <label>Erudição: <input type="number" style="float:right;"></label><br>
-             <label>Concentração: <input type="number" style="float:right;"></label><br>
-             <label>Tática: <input type="number" style="float:right;"></label><br>
-             <label>Pilotagem: <input type="number" style="float:right;"></label>
+             <label>Rituais: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Medicina: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Erudição: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Concentração: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Tática: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Pilotagem: <input type="number" placeholder="+" style="float:right;"></label>
            </div>
 
            <div class="coluna-pericia"><h3>Instinto (INS)</h3>
-             <label>Percepção: <input type="number" style="float:right;"></label><br>
-             <label>Reflexo: <input type="number" style="float:right;"></label><br>
-             <label>Intuição: <input type="number" style="float:right;"></label><br>
-             <label>Sobrevivência: <input type="number" style="float:right;"></label><br>
-             <label>Iniciática: <input type="number" style="float:right;"></label><br>
-             <label>Adestramento: <input type="number" style="float:right;"></label>
+             <label>Percepção: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Reflexo: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Intuição: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Sobrevivência: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Iniciática: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Adestramento: <input type="number" placeholder="+" style="float:right;"></label>
            </div>
 
            <div class="coluna-pericia"><h3>Presença (PRE)</h3>
-             <label>Intimidação: <input type="number" style="float:right;"></label><br>
-             <label>Persuasão: <input type="number" style="float:right;"></label><br>
-             <label>Encenação: <input type="number" style="float:right;"></label><br>
-             <label>Crença: <input type="number" style="float:right;"></label><br>
-             <label>Diplomacia: <input type="number" style="float:right;"></label><br>
-             <label>Vontade: <input type="number" style="float:right;"></label>
+             <label>Intimidação: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Persuasão: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Encenação: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Crença: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Diplomacia: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Vontade: <input type="number" placeholder="+" style="float:right;"></label>
            </div>
 
            <div class="coluna-pericia"><h3>Conhecimento (CON)</h3>
-             <label>Investigação: <input type="number" style="float:right;"></label><br>
-             <label>Ciências: <input type="number" style="float:right;"></label><br>
-             <label>Tecnologia: <input type="number" style="float:right;"></label><br>
-             <label>Crime: <input type="number" style="float:right;"></label><br>
-             <label>Pontaria: <input type="number" style="float:right;"></label>
+             <label>Investigação: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Ciências: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Tecnologia: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Crime: <input type="number" placeholder="+" style="float:right;"></label><br>
+             <label>Pontaria: <input type="number" placeholder="+" style="float:right;"></label>
            </div>
         </div>
 
@@ -239,6 +239,4 @@
         </div>
     </div>
 
-    <script type="module" src="script.js"></script>
-</body>
-</html>
+   
