@@ -241,6 +241,7 @@ h1 {
   margin-top: 10px;
   width: 200px;
   text-align: center;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); /* Sombra branca */
 }
 
 .linha-extra {
@@ -354,6 +355,10 @@ h1 {
   margin-top: 10px;
 }
 
+.tab.active {
+  display: block;
+}
+
 .tab table {
   width: 100%;
   border-collapse: collapse;
@@ -391,6 +396,15 @@ input:focus {
 .pequeno-input {
   width: 60px;
   text-align: center;
+}
+
+.botoes button {
+  transition: 0.3s;
+}
+
+.botoes button:hover {
+  transform: translateY(-5px); /* Salto */
+  box-shadow: 0 0 20px rgba(127, 28, 255, 0.8); /* Iluminação */
 }
 
 /* === ANIMAÇÕES === */
