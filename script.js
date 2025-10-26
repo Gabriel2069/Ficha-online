@@ -121,6 +121,7 @@ async function createNewFicha() {
 
   showNotification("Nova ficha criada!", "success");
   openFicha(fichaId);
+  }
 
 async function openFicha(fichaId) {
   const fichaRef = doc(db, "fichas", fichaId);
