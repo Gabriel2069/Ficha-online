@@ -114,10 +114,13 @@ async function createNewFicha() {
   if (!user) return;
 
   const fichaId = `${user.uid}-${Date.now()}`;
-  await setDoc(doc(db, "fichas", fichaId), { nome: "Novo Personagem" });
+  await setDoc(doc(db, "fichas", fichaId), {
+    nome: "Novo Personagem",
+    owner: user.uid
+  });
+
   showNotification("Nova ficha criada!", "success");
   openFicha(fichaId);
-}
 
 async function openFicha(fichaId) {
   const fichaRef = doc(db, "fichas", fichaId);
@@ -201,7 +204,10 @@ function updateBarraVisual(tipo) {
 // ======= SALVAR =======
 function salvarFicha() {
   const user = auth.currentUser;
-  if (!user) return showNotification("Usuário não logado", "error");
+  if (!user) {
+    showNotification("Usuário não logado", "error");
+    return;
+  }
 
   const campos = [
     'nome','idade','origem','ocupacao','marca','motivacao',
@@ -214,8 +220,11 @@ function salvarFicha() {
   const data = {};
   campos.forEach(id => {
     const el = document.getElementById(id);
-    if(el) data[id] = el.value;
+    if (el) data[id] = el.value;
   });
+
+  // Adiciona o campo owner para controle de acesso
+  data.owner = user.uid;
 
   const fichaId = `${user.uid}-${data.nome || "semnome"}`;
   setDoc(doc(db, "fichas", fichaId), data)
