@@ -38,14 +38,14 @@
             <!-- Esquerda: PE e Defesa -->
             <div class="coluna-lateral">
                 <label>Pontos de Esforço: 
-                    <input id="pe-atual" type="number" onchange="updateBarra('pe')"> / 
-                    <input id="pe-max" type="number" readonly>
+                    <input id="pe-atual" class="pequeno-input" type="number" onchange="updateBarraVisual('pe')"> / 
+                    <input id="pe-max" class="pequeno-input" type="number" readonly>
                     <div id="barra-pe" class="barra pe"></div>
                 </label><br>
                 <label>Defesa: 
                     <div id="defesa-val" class="escudo">10</div> + 
-                    <input id="def-equip" type="number"> (equipamento) + 
-                    <input id="def-bonus" type="number"> (bônus)
+                    <input id="def-equip" class="pequeno-input" type="number"> (equipamento) + 
+                    <input id="def-bonus" class="pequeno-input" type="number"> (bônus)
                 </label>
             </div>
 
@@ -87,13 +87,13 @@
             <!-- Direita: PV e SAN -->
             <div class="coluna-lateral">
                 <label>Pontos de Vida: 
-                    <input id="pv-atual" type="number" onchange="updateBarra('pv')"> / 
-                    <input id="pv-max" type="number" readonly>
+                    <input id="pv-atual" class="pequeno-input" type="number" onchange="updateBarraVisual('pv')"> / 
+                    <input id="pv-max" class="pequeno-input" type="number" readonly>
                     <div id="barra-pv" class="barra pv"></div>
                 </label><br>
                 <label>Sanidade: 
-                    <input id="san-atual" type="number" onchange="updateBarra('san')"> / 
-                    <input id="san-max" type="number" readonly>
+                    <input id="san-atual" class="pequeno-input" type="number" onchange="updateBarraVisual('san')"> / 
+                    <input id="san-max" class="pequeno-input" type="number" readonly>
                     <div id="barra-san" class="barra san"></div>
                 </label>
             </div>
