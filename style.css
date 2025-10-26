@@ -39,7 +39,6 @@ h1 {
   flex-wrap: wrap;
 }
 
-/* ===== CRITÉRIOS (PV, SAN, PE, DEF) ===== */
 .criterio-card {
   background: rgba(20, 20, 30, 0.85);
   border: 1px solid rgba(127, 28, 255, 0.3);
@@ -100,7 +99,7 @@ h1 {
   font-size: 0.85rem;
 }
 
-/* ===== DEFESA (CÍRCULO) ===== */
+/* ===== DEFESA CÍRCULO ===== */
 .defesa-circle {
   width: 90px;
   height: 90px;
@@ -170,12 +169,6 @@ h1 {
   transition: 0.4s;
 }
 
-.pentagono:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 15px rgba(127, 28, 255, 0.5);
-}
-
-/* Atributos nas pontas */
 .atributo {
   position: absolute;
   width: 40px;
@@ -188,12 +181,6 @@ h1 {
   text-align: center;
   line-height: 38px;
   box-shadow: 0 0 10px rgba(127, 28, 255, 0.4);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.atributo:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(160, 50, 255, 0.8);
 }
 
 /* ===== PERÍCIAS ===== */
@@ -215,11 +202,6 @@ h1 {
   text-align: center;
   box-shadow: 0 0 10px rgba(127, 28, 255, 0.2);
   transition: 0.3s;
-}
-
-.coluna-pericia:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 20px rgba(127, 28, 255, 0.4);
 }
 
 .coluna-pericia label {
