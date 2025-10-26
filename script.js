@@ -37,9 +37,19 @@ function signup() {
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
   
-  createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
-    .then(() => showNotification("Conta criada com sucesso!", "success"))
-    .catch(error => showNotification("Erro ao cadastrar: " + error.message, "error"));
+createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+  .then((userCredential) => {
+    const user = userCredential.user;
+
+    // Cria documento de perfil com role "jogador"
+    setDoc(doc(db, "usuarios", user.uid), {
+      email: user.email,
+      role: "jogador" // ou "mestre" se for você
+    });
+
+    showNotification("Conta criada com sucesso!", "success");
+  })
+  .catch(error => showNotification("Erro ao cadastrar: " + error.message, "error"));
 }
 
 function login() {
