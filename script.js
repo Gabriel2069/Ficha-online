@@ -228,15 +228,17 @@ function salvarFicha() {
    // Salva todas as perícias dinamicamente
   const periciasDiv = document.querySelectorAll('.pericias .coluna-pericia');
   periciasDiv.forEach(coluna => {
-    const categoria = coluna.querySelector('h3').innerText.match(/\((\w+)\)/)[1]; // pega COR, MEN, INS...
-    const inputs = coluna.querySelectorAll('input');
-    data[categoria] = {}; // cria objeto para cada categoria
-    inputs.forEach((input, idx) => {
-      // nome da perícia é o label antes do input
-      const label = input.previousSibling.textContent.trim().replace(':','');
-      data[categoria][label] = input.value;
-    });
+    const categoria = coluna.querySelector('h3').innerText.match(/\((\w+)\)/)[1]; // COR, MEN, etc.
+    const labels = coluna.querySelectorAll('label');
+    data[categoria] = {};
+
+    labels.forEach(label => {
+      const nome = label.textContent.trim().replace(':', '');
+      const input = label.querySelector('input');
+      data[categoria][nome] = input.value;
   });
+});
+
   
   // Adiciona o campo owner para controle de acesso
   data.owner = user.uid;
