@@ -121,7 +121,8 @@ async function createNewFicha() {
 
   showNotification("Nova ficha criada!", "success");
   openFicha(fichaId);
-  }
+} // ← esta é a chave correta
+
 
 async function openFicha(fichaId) {
   const fichaRef = doc(db, "fichas", fichaId);
