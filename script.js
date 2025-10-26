@@ -86,23 +86,17 @@ function salvarFicha() {
             nome: document.getElementById('nome').value,
             // ... coletar todos os campos
         };
-        db.collection('fichas').doc(user.uid).set(data);
+        setDoc(doc(db, 'fichas', user.uid), data);
     }
 }
 
-function showTab(tab) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.getElementById(tab).classList.add('active');
+function showFicha() {
+  document.getElementById('auth').style.display = 'none';
+  document.getElementById('ficha').style.display = 'block';
 }
 
 function showFicha() { document.getElementById('auth').style.display = 'none'; document.getElementById('ficha').style.display = 'block'; }
 
-window.signup = signup;
-window.login = login;
-window.salvarFicha = salvarFicha;
-window.updateCalculos = updateCalculos;
-window.updateDefesa = updateDefesa;
-window.updateBarra = updateBarra;
-window.updateEquilibrio = updateEquilibrio;
-window.updateExposicao = updateExposicao;
-window.showTab = showTab;
+document.getElementById('btn-login').addEventListener('click', login);
+document.getElementById('btn-signup').addEventListener('click', signup);
+document.getElementById('btn-salvar').addEventListener('click', salvarFicha);
