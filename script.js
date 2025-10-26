@@ -248,4 +248,5 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("fichaContainer").style.display = "none";
     document.getElementById("fichasContainer").style.display = "block";
   }); // ← fechamento da função do botão
+  
 }); // ← fechamento da função DOMContentLoaded
