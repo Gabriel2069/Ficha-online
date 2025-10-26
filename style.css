@@ -1,291 +1,289 @@
 /* === Reset e base === */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-  font-family: "Poppins", sans-serif;
-  background: radial-gradient(circle at top, #111 0%, #000 80%);
-  color: #eee;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
+    font-family: "Poppins", sans-serif;
+    background: radial-gradient(circle at top, #111 0%, #000 80%);
+    color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
 }
 
 h1, h3 {
-  text-align: center;
-  color: #fff;
-  letter-spacing: 1px;
+    text-align: center;
+    color: #fff;
+    letter-spacing: 1px;
 }
 
+/* === Inputs e Botões === */
 input, button {
-  background: #1a1a1a;
-  border: 1px solid #333;
-  color: #eee;
-  border-radius: 5px;
-  padding: 6px 10px;
-  font-size: 14px;
+    font-family: inherit;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background: #1a1a1a;
+    color: #eee;
+    padding: 6px 10px;
+    font-size: 14px;
+    transition: all 0.2s;
 }
 
 input:focus, button:hover {
-  border-color: #6f00ff;
-  outline: none;
-  box-shadow: 0 0 8px #6f00ff55;
+    border-color: #6f00ff;
+    outline: none;
+    box-shadow: 0 0 8px #6f00ff55;
 }
 
 button {
-  cursor: pointer;
-  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-  transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
 }
 
 button:hover {
-  background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+    background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
 }
 
-/* === Layout principal === */
+/* === Containers === */
 #auth, #ficha {
-  background: rgba(20, 20, 20, 0.95);
-  border: 1px solid #333;
-  border-radius: 10px;
-  padding: 20px;
-  margin-top: 50px;
-  width: 90%;
-  max-width: 1100px;
-  box-shadow: 0 0 20px #000;
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    max-width: 1000px;
+    box-shadow: 0 0 20px #000;
 }
 
+/* === Login centralizado === */
 #auth {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 50px;
 }
 
-/* === Topo === */
+#auth input {
+    width: 300px;
+    height: 35px;
+    text-align: center;
+}
+
+/* === Topo com 2 colunas === */
 .topo {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
 }
 
 .coluna label {
-  display: block;
-  margin-bottom: 10px;
+    display: block;
+    margin-bottom: 10px;
 }
 
-/* === Meio (pentágono) === */
+/* === Meio geral === */
+.meio-geral {
+    gap: 20px;
+}
+
+/* === Colunas laterais === */
+.coluna-lateral {
+    flex: 1;
+}
+
+/* === Pentágono central === */
 .meio {
-  text-align: center;
-  position: relative;
-  margin: 30px 0;
+    flex: 2;
+    text-align: center;
+    position: relative;
 }
 
 .meio svg {
-  width: 250px;
-  height: 250px;
-  margin: 0 auto;
-  filter: drop-shadow(0 0 8px #6f00ff55);
+    width: 260px;
+    height: 260px;
+    margin: 0 auto;
+    filter: drop-shadow(0 0 8px #6f00ff55);
 }
 
 .meio polygon {
-  stroke: #6f00ff;
-  stroke-width: 2;
-  fill: none;
+    stroke: #6f00ff;
+    stroke-width: 2;
+    fill: none;
 }
 
 .meio circle {
-  fill: #1a1a1a;
-  stroke: #6f00ff88;
-  stroke-width: 2;
-}
-
-.meio text {
-  fill: #eee;
-  font-size: 12px;
-  pointer-events: none;
+    stroke: #6f00ff88;
+    stroke-width: 2;
+    fill: #1a1a1a;
 }
 
 .atributos {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+    font-weight: bold;
 }
 
-.atributo-input {
-  width: 40px;
-  text-align: center;
-  background: #111;
-  color: #fff;
-  border: 1px solid #333;
-  border-radius: 50%;
-}
-
-/* === Barras === */
-.barras {
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
-  margin-top: 20px;
-}
-
-.esquerda, .direita {
-  flex: 1;
-}
-
+/* === Barras principais (PV, SAN, PE) === */
 .barra {
-  width: 100%;
-  height: 20px;
-  border-radius: 10px;
-  margin-top: 5px;
-  background: #555;
-  position: relative;
+    height: 20px;
+    border-radius: 10px;
+    background: #333;
+    position: relative;
+    margin-top: 5px;
 }
 
-.barra::after {
-  content: attr(data-value);
-  position: absolute;
-  right: 5px;
-  top: 0;
-  color: #fff;
-  font-size: 12px;
+.barra:after {
+    content: attr(data-value);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-weight: bold;
 }
 
-.vermelha { background: linear-gradient(90deg, #ff4040 0%, #800000 100%); }
-.roxa { background: linear-gradient(90deg, #b84dff 0%, #4a0072 100%); }
-.verde { background: linear-gradient(90deg, #1f8 0%, #0d5 100%); }
+.barra.pv { background: linear-gradient(to right, #800000 0%, #ff4040 100%); }
+.barra.san { background: linear-gradient(to right, #4a0072 0%, #b84dff 100%); }
+.barra.pe { background: linear-gradient(to right, #0d5 0%, #1f8 100%); }
 
+/* === Escudo defesa === */
 .escudo {
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  background: #202040;
-  color: #fff;
-  text-align: center;
-  line-height: 40px;
-  border-radius: 50%;
-  box-shadow: inset 0 0 8px #6f00ff55;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: #202040;
+    color: #fff;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 8px #6f00ff55;
+    margin-right: 5px;
 }
 
-/* === Linhas Cartesiana === */
+/* === Linhas de sliders === */
 .linhas {
-  margin: 30px 0;
+    margin: 30px 0;
+}
+
+input[type=range] {
+    width: 100%;
+    margin: 10px 0;
+    -webkit-appearance: none;
+    background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    background: #6f00ff;
+    cursor: pointer;
+    margin-top: -4px;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    height: 10px;
+    border-radius: 10px;
+    background: #555;
+}
+
+#barra-equilibrio, #barra-exposicao {
+    height: 20px;
+    border-radius: 10px;
+    position: relative;
 }
 
 #barra-equilibrio {
-  height: 15px;
-  border-radius: 10px;
-  background: linear-gradient(to right, #f0e68c 0%, #444 50%, #b30000 100%);
-  position: relative;
+    background: linear-gradient(to right, #b30000 0%, #444 50%, #f0e68c 100%);
 }
 
 #barra-exposicao {
-  height: 15px;
-  border-radius: 10px;
-  background: repeating-linear-gradient(
-    45deg,
-    #111 0%,
-    #333 10%,
-    #6f00ff 10%,
-    #6f00ff 15%
-  );
-  position: relative;
-}
-
-input[type="range"] {
-  width: 100%;
-  margin-top: 5px;
-  -webkit-appearance: none;
-  background: transparent;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
-  background: #6f00ff;
-  border-radius: 50%;
-  cursor: pointer;
-  position: relative;
-}
-
-input[type="range"]::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  background: #6f00ff;
-  border-radius: 50%;
-  cursor: pointer;
+    background: repeating-linear-gradient(
+        45deg,
+        #111 0%,
+        #333 10%,
+        #6f00ff 10%,
+        #6f00ff 15%
+    );
 }
 
 /* === Perícias === */
 .pericias {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: nowrap;
-  margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: nowrap;
+    margin-bottom: 30px;
 }
 
 .coluna-pericia {
-  flex: 1;
-  min-width: 180px;
-  background: #111;
-  border-radius: 10px;
-  padding: 10px;
+    flex: 1;
+    background: #111;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .coluna-pericia h3 {
-  text-align: center;
-  margin-bottom: 10px;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
-.coluna-pericia label {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 8px;
-}
-
+/* === Inputs das perícias === */
 .coluna-pericia input {
-  width: 60px;
-  background: #222;
-  color: #fff;
-  text-align: center;
-  border-radius: 5px;
-  border: 1px solid #333;
+    width: 60px;
+    margin-bottom: 5px;
 }
 
 /* === Abas === */
 .abas {
-  margin: 20px 0;
-  display: flex;
-  gap: 10px;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
+.abas button {
+    flex: 1;
+    background: #222;
+    border: 1px solid #444;
+}
+
+.abas button.active {
+    background: #6f00ff;
+    color: #fff;
+}
+
+/* === Conteúdo das abas === */
 .tab {
-  display: none;
+    display: none;
+    background: #111;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
-.tab.active {
-  display: block;
+.tab table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #111;
-  border-radius: 5px;
+.tab table th, .tab table td {
+    padding: 5px;
 }
 
-table th, table td {
-  padding: 5px;
-}
-
-table input {
-  width: 100%;
-  background: #222;
-  color: #fff;
-  border: 1px solid #333;
-  border-radius: 3px;
-  text-align: center;
+.tab table input {
+    width: 100%;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: #eee;
 }
