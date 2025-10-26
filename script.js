@@ -232,7 +232,7 @@ function updateBarraVisual(tipo) {
 
   // Atualiza barras
   updateBarras();
-}
+
 
 // === Atualiza barras coloridas ===
 function updateBarra(tipo) {
