@@ -230,6 +230,44 @@ function updateBarraVisual(tipo) {
   barra.style.width = `${percent}%`;
 }
 
+  // Atualiza barras
+  updateBarras();
+}
+
+// === Atualiza barras coloridas ===
+function updateBarra(tipo) {
+  const atual = parseInt(document.getElementById(`${tipo}-atual`).value)||0;
+  const max = parseInt(document.getElementById(`${tipo}-max`).value)||1;
+  const barra = document.getElementById(`barra-${tipo}`);
+  barra.style.background = barra.classList.contains('vermelha') ? 'linear-gradient(90deg,#440000,#ff4040)' :
+                           barra.classList.contains('roxa') ? 'linear-gradient(90deg,#4a0072,#b84dff)' :
+                           'linear-gradient(90deg,#055,#1f8)';
+
+  barra.innerHTML = `<span class="barra-num">${atual}/${max}</span>`;
+  barra.style.width = '100%';
+  barra.querySelector('.barra-num').style.left = `${Math.min((atual/max)*100,100)}%`;
+}
+
+function updateBarras() {
+  ['pv','san','pe'].forEach(t => updateBarra(t));
+}
+
+// === Equilíbrio e Exposição ===
+function updateEquilibrio() {
+  const val = parseInt(document.getElementById('equilibrio').value)||0;
+  const barra = document.getElementById('barra-equilibrio');
+  const percent = ((val+10)/20)*100;
+  barra.style.background = `linear-gradient(to right,#550000 0%, #555 ${percent}%, #f0e68c 100%)`;
+}
+
+function updateExposicao() {
+  updateCalculos();
+  const val = parseInt(document.getElementById('exposicao').value)||0;
+  const barra = document.getElementById('barra-exposicao');
+  const percent = (val/10)*100;
+  barra.style.background = `repeating-linear-gradient(to right, #111 0% ${percent}%, #333 ${percent}% ${percent+10}%, #6f00ff ${percent+10}% ${percent+20}%)`;
+}
+
 // ======= SALVAR =======
 function salvarFicha() {
   const user = auth.currentUser;
