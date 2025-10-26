@@ -1,5 +1,5 @@
 // Config Firebase (substitua pelas suas chaves)
-const firebaseConfig = {  apiKey: "AIzaSyD3Qssht7axuM8aE4gQL965EBZJo-qzmsU",
+const firebaseConfig = { apiKey: "AIzaSyD3Qssht7axuM8aE4gQL965EBZJo-qzmsU",
     authDomain: "fichas-e87fd.firebaseapp.com",
     projectId: "fichas-e87fd",
     storageBucket: "fichas-e87fd.firebasestorage.app",
