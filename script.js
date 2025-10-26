@@ -243,5 +243,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById('btn-login').addEventListener('click', login);
   document.getElementById('btn-signup').addEventListener('click', signup);
   document.getElementById('btn-salvar').addEventListener('click', salvarFicha);
+  document.getElementById("voltarSelecaoBtn").addEventListener("click", () => {
+  // Esconde a página da ficha e mostra a tela de seleção
+  document.getElementById("fichaContainer").style.display = "none";
+  document.getElementById("fichasContainer").style.display = "block";
 
 });
