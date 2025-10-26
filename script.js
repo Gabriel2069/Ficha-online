@@ -246,10 +246,7 @@ function updateBarras() {
 
 // === Equilíbrio e Exposição ===
 function updateEquilibrio() {
-  const val = parseInt(document.getElementById('equilibrio').value) || 0;
-  const barra = document.getElementById('barra-equilibrio');
-  const percent = ((val + 10) / 20) * 100;  // 0% no centro (-10), 100% na direita (+10)
-  barra.style.background = `linear-gradient(to right, #550000 0%, #000 ${50 - percent/2}%, #fffacd ${50 + percent/2}%, #ffff00 100%)`;  // Vermelho esquerda, amarelo direita, meio a meio no centro
+  // Degradê fixo no CSS: vermelho esquerda, amarelo direita, meio a meio no centro
 }
 
 function updateExposicao() {
@@ -291,7 +288,7 @@ function salvarFicha() {
   // Salva todas as perícias
   const periciasDiv = document.querySelectorAll('.pericias .coluna-pericia');
   periciasDiv.forEach(coluna => {
-    const categoria = coluna.querySelector('h3').innerText.match(/\$(\w+)\$/)[1];
+    const categoria = coluna.querySelector('h3').innerText.match(/\((\w+)\)/)[1];
     const labels = coluna.querySelectorAll('label');
     data[categoria] = {};
     labels.forEach(label => {
