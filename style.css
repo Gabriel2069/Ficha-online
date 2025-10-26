@@ -212,16 +212,15 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 
 #barra-equilibrio {
-    background: linear-gradient(to right, #b30000 0%, #444 50%, #f0e68c 100%);
+    background: linear-gradient(to right, #550000 0%, #555 50%, #f0e68c 100%);
 }
 
 #barra-exposicao {
     background: repeating-linear-gradient(
-        45deg,
-        #111 0%,
-        #333 10%,
-        #6f00ff 10%,
-        #6f00ff 15%
+      to right,
+      #111 0% 10%,
+      #333 10% 20%,
+      #6f00ff 20% 30%
     );
 }
 
