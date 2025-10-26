@@ -116,6 +116,8 @@ function showFicha() {
 
 function showFicha() { document.getElementById('auth').style.display = 'none'; document.getElementById('ficha').style.display = 'block'; }
 
+window.addEventListener("DOMContentLoaded", () => {
 document.getElementById('btn-login').addEventListener('click', login);
 document.getElementById('btn-signup').addEventListener('click', signup);
 document.getElementById('btn-salvar').addEventListener('click', salvarFicha);
+});
