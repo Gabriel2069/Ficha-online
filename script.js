@@ -96,3 +96,13 @@ function showTab(tab) {
 }
 
 function showFicha() { document.getElementById('auth').style.display = 'none'; document.getElementById('ficha').style.display = 'block'; }
+
+window.signup = signup;
+window.login = login;
+window.salvarFicha = salvarFicha;
+window.updateCalculos = updateCalculos;
+window.updateDefesa = updateDefesa;
+window.updateBarra = updateBarra;
+window.updateEquilibrio = updateEquilibrio;
+window.updateExposicao = updateExposicao;
+window.showTab = showTab;
