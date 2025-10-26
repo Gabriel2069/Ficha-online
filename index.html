@@ -6,185 +6,171 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<!-- LOGIN / CADASTRO -->
-<div id="auth">
-  <h1>Login / Cadastro</h1>
-  <input id="email" type="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Senha">
-  <button id="btn-login">Login</button>
-  <button id="btn-signup">Cadastrar</button>
-</div>
-
-<!-- FICHA RPG -->
-<div id="ficha" style="display:none;">
-  <h1>Ficha de RPG</h1>
-
-  <!-- TOPO: 2 COLUNAS -->
-  <div class="topo">
-    <div class="coluna">
-      <label>Nome: <input id="nome" type="text"></label>
-      <label>Idade: <input id="idade" type="number"></label>
-      <label>Origem: <input id="origem" type="text"></label>
-    </div>
-    <div class="coluna">
-      <label>Ocupação: <input id="ocupacao" type="text"></label>
-      <label>Marca: <input id="marca" type="text"></label>
-      <label>Motivação: <input id="motivacao" type="text"></label>
-    </div>
+  <!-- LOGIN -->
+  <div id="auth">
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Senha">
+    <button id="btn-login">Login</button>
+    <button id="btn-signup">Cadastrar</button>
   </div>
 
-  <!-- MEIO: BARRAS + PENTÁGONO -->
-  <div class="meio-wrapper">
-    <div class="coluna-esquerda">
-      <label>Pontos de Esforço:
-        <input id="pe-atual" type="number">
-        / <input id="pe-max" type="number" readonly>
-        <div id="barra-pe" class="barra verde"></div>
-      </label>
-      <label>Defesa: 
-        <div id="defesa-val" class="escudo">10</div>
-        + <input id="def-equip" type="number" placeholder="equipamento">
-        + <input id="def-bonus" type="number" placeholder="bônus">
-      </label>
+  <!-- FICHA -->
+  <div id="ficha" style="display:none;">
+    <h1>Ficha de RPG</h1>
+
+    <!-- Topo: 2 colunas -->
+    <div class="topo">
+      <div class="coluna">
+        <label>Nome: <input id="nome" type="text"></label>
+        <label>Idade: <input id="idade" type="number"></label>
+        <label>Origem: <input id="origem" type="text"></label>
+      </div>
+      <div class="coluna">
+        <label>Ocupação: <input id="ocupacao" type="text"></label>
+        <label>Marca: <input id="marca" type="text"></label>
+        <label>Motivação: <input id="motivacao" type="text"></label>
+      </div>
     </div>
 
-    <div class="coluna-meio">
-      <svg width="260" height="260" viewBox="0 0 200 200">
-        <polygon points="100,10 190,70 155,180 45,180 10,70" fill="none" stroke="#6f00ff" stroke-width="2"/>
-        <!-- Círculos dos atributos -->
-        <circle cx="100" cy="10" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2"></circle>
-        <text x="100" y="15" text-anchor="middle" fill="#eee">COR</text>
-        <foreignObject x="85" y="-5" width="30" height="30">
-          <input id="cor" type="number" class="atributo-input" min="0" max="6"/>
-        </foreignObject>
+    <!-- Meio: 3 colunas, pentágono central -->
+    <div class="barras">
+      <!-- Esquerda: PV e SAN -->
+      <div class="esquerda">
+        <label>Pontos de Vida: 
+          <input id="pv-atual" type="number" min="0" onchange="updateBarra('pv')"> / 
+          <input id="pv-max" type="number" readonly>
+          <div id="barra-pv" class="barra vermelha"></div>
+        </label>
+        <label>Sanidade: 
+          <input id="san-atual" type="number" min="0" onchange="updateBarra('san')"> / 
+          <input id="san-max" type="number" readonly>
+          <div id="barra-san" class="barra roxa"></div>
+        </label>
+      </div>
 
-        <circle cx="190" cy="70" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2"></circle>
-        <text x="190" y="75" text-anchor="middle" fill="#eee">MEN</text>
-        <foreignObject x="175" y="55" width="30" height="30">
-          <input id="men" type="number" class="atributo-input" min="0" max="6"/>
-        </foreignObject>
+      <!-- Meio: Pentágono -->
+      <div class="meio">
+        <svg width="250" height="250" viewBox="0 0 200 200">
+          <polygon points="100,10 190,70 155,180 45,180 10,70" fill="none" stroke="#6f00ff" stroke-width="2"/>
+          <circle cx="100" cy="10" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2"></circle>
+          <text x="100" y="15" text-anchor="middle" fill="#eee" font-size="12">COR</text>
+          <circle cx="190" cy="70" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2"></circle>
+          <text x="190" y="75" text-anchor="middle" fill="#eee" font-size="12">MEN</text>
+          <circle cx="155" cy="180" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2"></circle>
+          <text x="155" y="185" text-anchor="middle" fill="#eee" font-size="12">INS</text>
+          <circle cx="45" cy="180" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2"></circle>
+          <text x="45" y="185" text-anchor="middle" fill="#eee" font-size="12">PRE</text>
+          <circle cx="10" cy="70" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2"></circle>
+          <text x="10" y="75" text-anchor="middle" fill="#eee" font-size="12">CON</text>
+        </svg>
+        <div class="atributos">
+          <input id="cor-val" class="atributo-input" type="number" min="0" max="6" onchange="updateCalculos()"> COR
+          <input id="men-val" class="atributo-input" type="number" min="0" max="6" onchange="updateCalculos()"> MEN
+          <input id="ins-val" class="atributo-input" type="number" min="0" max="6" onchange="updateCalculos()"> INS
+          <input id="pre-val" class="atributo-input" type="number" min="0" max="6" onchange="updateCalculos()"> PRE
+          <input id="con-val" class="atributo-input" type="number" min="0" max="6" onchange="updateCalculos()"> CON
+        </div>
+      </div>
 
-        <circle cx="155" cy="180" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2"></circle>
-        <text x="155" y="185" text-anchor="middle" fill="#eee">INS</text>
-        <foreignObject x="140" y="165" width="30" height="30">
-          <input id="ins" type="number" class="atributo-input" min="0" max="6"/>
-        </foreignObject>
-
-        <circle cx="45" cy="180" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2"></circle>
-        <text x="45" y="185" text-anchor="middle" fill="#eee">PRE</text>
-        <foreignObject x="30" y="165" width="30" height="30">
-          <input id="pre" type="number" class="atributo-input" min="0" max="6"/>
-        </foreignObject>
-
-        <circle cx="10" cy="70" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2"></circle>
-        <text x="10" y="75" text-anchor="middle" fill="#eee">CON</text>
-        <foreignObject x="-5" y="55" width="30" height="30">
-          <input id="con" type="number" class="atributo-input" min="0" max="6"/>
-        </foreignObject>
-      </svg>
+      <!-- Direita: PE e Defesa -->
+      <div class="direita">
+        <label>Pontos de Esforço: 
+          <input id="pe-atual" type="number" min="0" onchange="updateBarra('pe')"> / 
+          <input id="pe-max" type="number" readonly>
+          <div id="barra-pe" class="barra verde"></div>
+        </label>
+        <label>Defesa: 
+          <div id="defesa-val" class="escudo">10</div>
+          + <input id="def-equip" type="number" min="0" onchange="updateDefesa()"> (equipamento) 
+          + <input id="def-bonus" type="number" min="0" onchange="updateDefesa()"> (bônus)
+        </label>
+      </div>
     </div>
 
-    <div class="coluna-direita">
-      <label>Pontos de Vida:
-        <input id="pv-atual" type="number">
-        / <input id="pv-max" type="number" readonly>
-        <div id="barra-pv" class="barra vermelha"></div>
-      </label>
-      <label>Sanidade:
-        <input id="san-atual" type="number">
-        / <input id="san-max" type="number" readonly>
-        <div id="barra-san" class="barra roxa"></div>
-      </label>
+    <!-- Linhas Cartesiana -->
+    <div class="linhas">
+      <label>Equilíbrio: <input id="equilibrio" type="range" min="-10" max="10" value="0"></label>
+      <div id="barra-equilibrio"></div>
+
+      <label>Exposição: <input id="exposicao" type="range" min="0" max="10" value="0"></label>
+      <div id="barra-exposicao"></div>
     </div>
+
+    <!-- Perícias -->
+    <div class="pericias">
+      <div class="coluna-pericia">
+        <h3>Corpo (COR)</h3>
+        <label>Acrobacia<br><input type="number" min="0"></label>
+        <label>Atletismo<br><input type="number" min="0"></label>
+        <label>Luta<br><input type="number" min="0"></label>
+        <label>Fortitude<br><input type="number" min="0"></label>
+        <label>Furtividade<br><input type="number" min="0"></label>
+      </div>
+
+      <div class="coluna-pericia">
+        <h3>Mente (MEN)</h3>
+        <label>Rituais<br><input type="number" min="0"></label>
+        <label>Medicina<br><input type="number" min="0"></label>
+        <label>Erudição<br><input type="number" min="0"></label>
+        <label>Concentração<br><input type="number" min="0"></label>
+        <label>Tática<br><input type="number" min="0"></label>
+        <label>Pilotagem<br><input type="number" min="0"></label>
+      </div>
+
+      <div class="coluna-pericia">
+        <h3>Instinto (INS)</h3>
+        <label>Percepção<br><input type="number" min="0"></label>
+        <label>Reflexo<br><input type="number" min="0"></label>
+        <label>Intuição<br><input type="number" min="0"></label>
+        <label>Sobrevivência<br><input type="number" min="0"></label>
+        <label>Iniciática<br><input type="number" min="0"></label>
+        <label>Adestramento<br><input type="number" min="0"></label>
+      </div>
+
+      <div class="coluna-pericia">
+        <h3>Presença (PRE)</h3>
+        <label>Intimidação<br><input type="number" min="0"></label>
+        <label>Persuasão<br><input type="number" min="0"></label>
+        <label>Encenação<br><input type="number" min="0"></label>
+        <label>Crença<br><input type="number" min="0"></label>
+        <label>Diplomacia<br><input type="number" min="0"></label>
+        <label>Vontade<br><input type="number" min="0"></label>
+      </div>
+
+      <div class="coluna-pericia">
+        <h3>Conhecimento (CON)</h3>
+        <label>Investigação<br><input type="number" min="0"></label>
+        <label>Sobrenatural<br><input type="number" min="0"></label>
+        <label>Ciências<br><input type="number" min="0"></label>
+        <label>Tecnologia<br><input type="number" min="0"></label>
+        <label>Crime<br><input type="number" min="0"></label>
+        <label>Pontaria<br><input type="number" min="0"></label>
+      </div>
+    </div>
+
+    <!-- Abas -->
+    <div class="abas">
+      <button onclick="showTab('armas')">Armas</button>
+      <button onclick="showTab('habilidades')">Habilidades</button>
+      <button onclick="showTab('poderes')">Poderes</button>
+      <button onclick="showTab('inventario')">Inventário</button>
+      <button onclick="showTab('dados')">Dados</button>
+    </div>
+
+    <!-- Conteúdo das abas -->
+    <div id="armas" class="tab">
+      <table>
+        <tr><th>Nome</th><th>Tipo</th><th>Alcance</th><th>Dano</th><th>Crítico</th><th>Extra</th></tr>
+        <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      </table>
+    </div>
+    <div id="habilidades" class="tab"></div>
+    <div id="poderes" class="tab"></div>
+    <div id="inventario" class="tab"></div>
+    <div id="dados" class="tab"></div>
+
+    <button id="btn-salvar">Salvar</button>
   </div>
-
-  <!-- LINHAS CARTESIANAS -->
-  <div class="linhas">
-    <label>Equilíbrio:
-      <input id="equilibrio" type="range" min="-10" max="10" value="0">
-      <span id="equilibrio-num">0</span>
-    </label>
-    <div id="barra-equilibrio"></div>
-
-    <label>Exposição:
-      <input id="exposicao" type="range" min="0" max="10" value="0">
-      <span id="exposicao-num">0</span>
-    </label>
-    <div id="barra-exposicao"></div>
-  </div>
-
-  <!-- PERÍCIAS -->
-  <div class="pericias">
-    <div class="coluna-pericia">
-      <h3>Corpo (COR)</h3>
-      <input class="pericia-input" data-pericia="pericia-acrobacia" type="number" placeholder="+"> Acrobacia<br>
-      <input class="pericia-input" data-pericia="pericia-atletismo" type="number" placeholder="+"> Atletismo<br>
-      <input class="pericia-input" data-pericia="pericia-luta" type="number" placeholder="+"> Luta<br>
-      <input class="pericia-input" data-pericia="pericia-fortitude" type="number" placeholder="+"> Fortitude<br>
-      <input class="pericia-input" data-pericia="pericia-furtividade" type="number" placeholder="+"> Furtividade<br>
-    </div>
-    <div class="coluna-pericia">
-      <h3>Mente (MEN)</h3>
-      <input class="pericia-input" data-pericia="pericia-rituais" type="number" placeholder="+"> Rituais<br>
-      <input class="pericia-input" data-pericia="pericia-medicina" type="number" placeholder="+"> Medicina<br>
-      <input class="pericia-input" data-pericia="pericia-erudicao" type="number" placeholder="+"> Erudição<br>
-      <input class="pericia-input" data-pericia="pericia-concentracao" type="number" placeholder="+"> Concentração<br>
-      <input class="pericia-input" data-pericia="pericia-tatica" type="number" placeholder="+"> Tática<br>
-      <input class="pericia-input" data-pericia="pericia-pilotagem" type="number" placeholder="+"> Pilotagem<br>
-    </div>
-    <div class="coluna-pericia">
-      <h3>Instinto (INS)</h3>
-      <input class="pericia-input" data-pericia="pericia-percepcao" type="number" placeholder="+"> Percepção<br>
-      <input class="pericia-input" data-pericia="pericia-reflexo" type="number" placeholder="+"> Reflexo<br>
-      <input class="pericia-input" data-pericia="pericia-intuicao" type="number" placeholder="+"> Intuição<br>
-      <input class="pericia-input" data-pericia="pericia-sobrevivencia" type="number" placeholder="+"> Sobrevivência<br>
-      <input class="pericia-input" data-pericia="pericia-iniciatica" type="number" placeholder="+"> Iniciática<br>
-      <input class="pericia-input" data-pericia="pericia-adestramento" type="number" placeholder="+"> Adestramento<br>
-    </div>
-    <div class="coluna-pericia">
-      <h3>Presença (PRE)</h3>
-      <input class="pericia-input" data-pericia="pericia-intimidacao" type="number" placeholder="+"> Intimidação<br>
-      <input class="pericia-input" data-pericia="pericia-persuasao" type="number" placeholder="+"> Persuasão<br>
-      <input class="pericia-input" data-pericia="pericia-encenacao" type="number" placeholder="+"> Encenação<br>
-      <input class="pericia-input" data-pericia="pericia-crenca" type="number" placeholder="+"> Crença<br>
-      <input class="pericia-input" data-pericia="pericia-diplomacia" type="number" placeholder="+"> Diplomacia<br>
-      <input class="pericia-input" data-pericia="pericia-vontade" type="number" placeholder="+"> Vontade<br>
-    </div>
-    <div class="coluna-pericia">
-      <h3>Conhecimento (CON)</h3>
-      <input class="pericia-input" data-pericia="pericia-investigacao" type="number" placeholder="+"> Investigação<br>
-      <input class="pericia-input" data-pericia="pericia-sobrenatural" type="number" placeholder="+"> Sobrenatural<br>
-      <input class="pericia-input" data-pericia="pericia-ciencias" type="number" placeholder="+"> Ciências<br>
-      <input class="pericia-input" data-pericia="pericia-tecnologia" type="number" placeholder="+"> Tecnologia<br>
-      <input class="pericia-input" data-pericia="pericia-crime" type="number" placeholder="+"> Crime<br>
-      <input class="pericia-input" data-pericia="pericia-pontaria" type="number" placeholder="+"> Pontaria<br>
-    </div>
-  </div>
-
-  <!-- ABAS -->
-  <div class="abas">
-    <button onclick="showTab('armas')">Armas</button>
-    <button onclick="showTab('habilidades')">Habilidades</button>
-    <button onclick="showTab('poderes')">Poderes</button>
-    <button onclick="showTab('inventario')">Inventário</button>
-    <button onclick="showTab('dados')">Dados</button>
-  </div>
-
-  <div id="armas" class="tab">
-    <table>
-      <tr><th>Nome</th><th>Tipo</th><th>Alcance</th><th>Dano</th><th>Crítico</th><th>Extra</th></tr>
-      <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-    </table>
-  </div>
-
-  <div id="habilidades" class="tab"></div>
-  <div id="poderes" class="tab"></div>
-  <div id="inventario" class="tab"></div>
-  <div id="dados" class="tab"></div>
-
-  <button id="btn-salvar">Salvar</button>
-</div>
 
 <script type="module" src="script.js"></script>
 </body>
