@@ -1,23 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Ficha RPG Online</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ficha Online</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <!-- Login -->
-    <div id="auth">
-        <h1>Login / Cadastro</h1>
-        <input id="email" type="email" placeholder="Email"><br>
-        <input id="password" type="password" placeholder="Senha"><br>
-        <button id="btn-login">Login</button>
-        <button id="btn-signup">Cadastrar</button>
+   <!-- Login -->
+  <div id="auth">
+    <h2>Login / Cadastro</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Senha" />
+    <div class="auth-buttons">
+      <button id="btn-login">Entrar</button>
+      <button id="btn-signup">Cadastrar</button>
+    </div>
+  </div>
+    
+    <!-- Ficha -->
+   <div id="ficha" style="display: none;">
+    <h2>Ficha de Personagem</h2>
+    <div class="ficha-header">
+      <label>Nome: <input type="text" id="nome" /></label>
+      <label>Idade: <input type="number" id="idade" /></label>
+      <label>Origem: <input type="text" id="origem" /></label>
+      <label>Ocupação: <input type="text" id="ocupacao" /></label>
+      <label>Marca: <input type="text" id="marca" /></label>
+      <label>Motivação: <input type="text" id="motivacao" /></label>
     </div>
 
-    <!-- Ficha -->
-    <div id="ficha" style="display:none;">
-        <h1>Ficha de RPG</h1>
+    <div class="botoes-ficha">
+      <button id="btn-voltar">Voltar</button>
+      <button id="btn-salvar">Salvar</button>
+    </div>
+  </div>
+
 
         <!-- Topo: 2 colunas -->
         <div class="topo">
