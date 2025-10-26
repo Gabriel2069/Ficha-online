@@ -287,3 +287,67 @@ input[type=range]::-webkit-slider-runnable-track {
     border: 1px solid #333;
     color: #eee;
 }
+
+/* === Toasts (notificações) === */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #222;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 0 10px #000;
+}
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+.toast.sucesso { border-left: 4px solid #00ff88; }
+.toast.erro { border-left: 4px solid #ff4040; }
+.toast.info { border-left: 4px solid #6f00ff; }
+
+/* === Lista de fichas === */
+#lista-fichas {
+  background: rgba(20, 20, 20, 0.9);
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 800px;
+  margin: 50px auto;
+  box-shadow: 0 0 20px #000;
+}
+.fichas-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 15px;
+}
+.ficha-card {
+  width: 150px;
+  height: 150px;
+  border-radius: 12px;
+  background: #111;
+  border: 1px solid #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s;
+  text-align: center;
+}
+.ficha-card:hover {
+  background: #222;
+  transform: scale(1.05);
+}
+.ficha-card.add {
+  font-size: 3em;
+  color: #6f00ff;
+  font-weight: bold;
+  border: 2px dashed #6f00ff;
+}
