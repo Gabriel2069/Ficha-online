@@ -346,6 +346,37 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 
   font-size: 3em;
+
+.botoes {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+#salvarFichaBtn,
+#voltarSelecaoBtn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+#salvarFichaBtn:hover {
+  background-color: #45a049;
+}
+
+#voltarSelecaoBtn {
+  background-color: #555;
+}
+
+#voltarSelecaoBtn:hover {
+  background-color: #333;
+}
+
   color: #6f00ff;
   font-weight: bold;
   border: 2px dashed #6f00ff;
