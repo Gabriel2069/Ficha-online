@@ -244,15 +244,4 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById('btn-signup').addEventListener('click', signup);
   document.getElementById('btn-salvar').addEventListener('click', salvarFicha);
 
-  // 👁️ alternar exibição da senha
-  const togglePassword = document.getElementById('togglePassword');
-  const passwordInput = document.getElementById('password');
-
-  if (togglePassword && passwordInput) {
-    togglePassword.addEventListener('click', () => {
-      const isHidden = passwordInput.type === 'password';
-      passwordInput.type = isHidden ? 'text' : 'password';
-      togglePassword.textContent = isHidden ? '🙈' : '👁️';
-    });
-  }
 });
