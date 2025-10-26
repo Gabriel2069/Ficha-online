@@ -1,0 +1,18 @@
+.topo { display: flex; }
+.coluna { flex: 1; }
+.meio { text-align: center; }
+.barras { display: flex; }
+.esquerda, .direita { flex: 1; }
+.barra { height: 20px; background: gray; }
+.vermelha { background: red; }
+.roxa { background: purple; }
+.verde { background: green; }
+.escudo { display: inline-block; width: 30px; height: 30px; background: blue; text-align: center; line-height: 30px; }
+.linhas { margin: 20px 0; }
+#barra-equilibrio { height: 20px; background: linear-gradient(to right, darkred 0% 50%, gray 50%, yellow 50% 100%); }
+#barra-exposicao { height: 20px; background: repeating-linear-gradient(to right, black 0% 10%, white 10% 20%); }
+.pericias { display: flex; }
+.coluna-pericia { flex: 1; }
+.abas { margin: 20px 0; }
+.tab { display: none; }
+.tab.active { display: block; }
