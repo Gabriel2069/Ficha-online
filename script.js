@@ -1,4 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+import { query, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 import { 
   getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
@@ -81,22 +82,21 @@ async function showFichaList() {
   if (!user) return;
 
   const fichasRef = collection(db, "fichas");
-  const snapshot = await getDocs(fichasRef);
+  const q = query(fichasRef, where("owner", "==", user.uid));
+  const snapshot = await getDocs(q);
   let hasFicha = false;
 
   snapshot.forEach(docSnap => {
     const data = docSnap.data();
-    if (docSnap.id.startsWith(user.uid)) {
-      hasFicha = true;
-      const card = document.createElement("div");
-      card.className = "ficha-card";
-      card.innerHTML = `
-        <h3>${data.nome || "Sem nome"}</h3>
-        <p>ID: ${docSnap.id}</p>
-      `;
-      card.onclick = () => openFicha(docSnap.id);
-      cardsContainer.appendChild(card);
-    }
+    hasFicha = true;
+    const card = document.createElement("div");
+    card.className = "ficha-card";
+    card.innerHTML = `
+      <h3>${data.nome || "Sem nome"}</h3>
+      <p>ID: ${docSnap.id}</p>
+    `;
+    card.onclick = () => openFicha(docSnap.id);
+    cardsContainer.appendChild(card);
   });
 
   // Botão para criar nova ficha
