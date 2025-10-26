@@ -5,7 +5,8 @@ const firebaseConfig = { apiKey: "AIzaSyD3Qssht7axuM8aE4gQL965EBZJo-qzmsU",
     storageBucket: "fichas-e87fd.firebasestorage.app",
     messagingSenderId: "496979447757",
     appId: "1:496979447757:web:dc54dfdc358c558bc53e84",
-    measurementId: "G-VM3BG54LNE" };
+    measurementId: "G-VM3BG54LNE" 
+};
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
