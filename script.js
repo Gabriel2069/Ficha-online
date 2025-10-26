@@ -1,36 +1,43 @@
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-const firebaseConfig = { 
-    apiKey: "AIzaSyD3Qssht7axuM8aE4gQL965EBZJo-qzmsU",
-    authDomain: "fichas-e87fd.firebaseapp.com",
-    projectId: "fichas-e87fd",
-    storageBucket: "fichas-e87fd.firebasestorage.app",
-    messagingSenderId: "496979447757",
-    appId: "1:496979447757:web:dc54dfdc358c558bc53e84",
-    measurementId: "G-VM3BG54LNE" 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD3Qssht7axuM8aE4gQL965EBZJo-qzmsU",
+  authDomain: "fichas-e87fd.firebaseapp.com",
+  projectId: "fichas-e87fd",
+  storageBucket: "fichas-e87fd.firebasestorage.app",
+  messagingSenderId: "496979447757",
+  appId: "1:496979447757:web:dc54dfdc358c558bc53e84",
+  measurementId: "G-VM3BG54LNE"
 };
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 // Login/Signup
-function login() { auth.signInWithEmailAndPassword(document.getElementById('email').value, document.getElementById('password').value).then(() => showFicha()); }
-function signup() { auth.createUserWithEmailAndPassword(document.getElementById('email').value, document.getElementById('password').value); }
+function signup() {
+  createUserWithEmailAndPassword(auth, email.value, password.value);
+}
+
+function login() {
+  signInWithEmailAndPassword(auth, email.value, password.value).then(() => showFicha());
+}
 
 // Carregar ficha
-auth.onAuthStateChanged(user => {
-    if (user) {
-        db.collection('fichas').doc(user.uid).get().then(doc => {
-            if (doc.exists) {
-                const data = doc.data();
-                // Preencher campos com data
-                document.getElementById('nome').value = data.nome || '';
-                // ... preencher outros
-                updateCalculos();
-            }
-        });
-        showFicha();
-    }
+onAuthStateChanged(auth, user => {
+  if (user) {
+    const fichaRef = doc(db, 'fichas', user.uid);
+    getDoc(fichaRef).then(docSnap => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        nome.value = data.nome || '';
+        updateCalculos();
+      }
+    });
+    showFicha();
+  }
 });
 
 // Funções de cálculo
