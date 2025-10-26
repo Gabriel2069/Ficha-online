@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Ficha RPG Online</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <div id="auth">
+        <input id="email" placeholder="Email">
+        <input id="password" type="password" placeholder="Senha">
+        <button onclick="login()">Login</button>
+        <button onclick="signup()">Cadastrar</button>
+    </div>
+    <div id="ficha" style="display:none;">
+        <h1>Ficha de RPG</h1>
+        
+        <!-- Topo: 2 colunas -->
+        <div class="topo">
+            <div class="coluna">
+                <label>Nome: <input id="nome" type="text"></label><br>
+                <label>Idade: <input id="idade" type="number"></label><br>
+                <label>Origem: <input id="origem" type="text"></label>
+            </div>
+            <div class="coluna">
+                <label>Ocupação: <input id="ocupacao" type="text"></label><br>
+                <label>Marca: <input id="marca" type="text"></label><br>
+                <label>Motivação: <input id="motivacao" type="text"></label>
+            </div>
+        </div>
+        
+        <!-- Meio: Pentágono com atributos -->
+        <div class="meio">
+            <svg width="200" height="200" viewBox="0 0 200 200">
+                <polygon points="100,10 190,70 155,180 45,180 10,70" fill="none" stroke="black"/>
+                <circle cx="100" cy="10" r="20" fill="lightgray"><text x="100" y="15" text-anchor="middle" id="cor">COR</text></circle>
+                <circle cx="190" cy="70" r="20" fill="lightgray"><text x="190" y="75" text-anchor="middle" id="men">MEN</text></circle>
+                <circle cx="155" cy="180" r="20" fill="lightgray"><text x="155" y="185" text-anchor="middle" id="ins">INS</text></circle>
+                <circle cx="45" cy="180" r="20" fill="lightgray"><text x="45" y="185" text-anchor="middle" id="pre">PRE</text></circle>
+                <circle cx="10" cy="70" r="20" fill="lightgray"><text x="10" y="75" text-anchor="middle" id="con">CON</text></circle>
+            </svg>
+            <div class="atributos">
+                <input id="cor-val" type="number" onchange="updateCalculos()"> COR<br>
+                <input id="men-val" type="number" onchange="updateCalculos()"> MEN<br>
+                <input id="ins-val" type="number" onchange="updateCalculos()"> INS<br>
+                <input id="pre-val" type="number" onchange="updateCalculos()"> PRE<br>
+                <input id="con-val" type="number" onchange="updateCalculos()"> CON
+            </div>
+        </div>
+        
+        <!-- Barras: Esquerda e Direita -->
+        <div class="barras">
+            <div class="esquerda">
+                <label>Pontos de Esforço: <input id="pe-atual" type="number" onchange="updateBarra('pe')"> / <input id="pe-max" type="number" readonly> <div id="barra-pe" class="barra verde"></div></label><br>
+                <label>Defesa: <div id="defesa-val" class="escudo">10</div> + <input id="def-equip" type="number" onchange="updateDefesa()"> (equipamento) + <input id="def-bonus" type="number" onchange="updateDefesa()"> (bônus)</label>
+            </div>
+            <div class="direita">
+                <label>Pontos de Vida: <input id="pv-atual" type="number" onchange="updateBarra('pv')"> / <input id="pv-max" type="number" readonly> <div id="barra-pv" class="barra vermelha"></div></label><br>
+                <label>Sanidade: <input id="san-atual" type="number" onchange="updateBarra('san')"> / <input id="san-max" type="number" readonly> <div id="barra-san" class="barra roxa"></div></label>
+            </div>
+        </div>
+        
+        <!-- Linhas Cartesianas -->
+        <div class="linhas">
+            <label>Equilíbrio: <input id="equilibrio" type="range" min="-10" max="10" value="0" onchange="updateEquilibrio()"></label>
+            <div id="barra-equilibrio"></div>
+            <label>Exposição: <input id="exposicao" type="range" min="0" max="10" value="0" onchange="updateExposicao()"></label>
+            <div id="barra-exposicao"></div>
+        </div>
+        
+        <!-- Perícias -->
+        <div class="pericias">
+            <div class="coluna-pericia">
+                <h3>Corpo (COR)</h3>
+                Acrobacia: +<input type="number"><br>
+                Atletismo: +<input type="number"><br>
+                <!-- Adicione os outros -->
+            </div>
+            <!-- Repita para MEN, INS, PRE, CON -->
+        </div>
+        
+        <!-- Abas para Tabelas -->
+        <div class="abas">
+            <button onclick="showTab('armas')">Armas</button>
+            <button onclick="showTab('habilidades')">Habilidades</button>
+            <!-- Outras abas -->
+        </div>
+        <div id="armas" class="tab">
+            <table>
+                <tr><th>Nome</th><th>Tipo</th><th>Alcance</th><th>Dano</th><th>Crítico</th><th>Extra</th></tr>
+                <tr><td><input type="text"></td><td><input type="text"></td><!-- etc --></tr>
+            </table>
+        </div>
+        <!-- Repita para outras tabelas -->
+        
+        <button onclick="salvarFicha()">Salvar</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
