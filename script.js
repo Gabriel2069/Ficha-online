@@ -48,137 +48,146 @@ function login() {
     });
 }
 
-/* ===== CARREGAR FICHA ===== */
-onAuthStateChanged(auth, async user => {
+// ======= CARREGAR FICHA =======
+onAuthStateChanged(auth, user => {
   if (user) {
     const fichaRef = doc(db, 'fichas', user.uid);
-    const docSnap = await getDoc(fichaRef);
-    if (docSnap.exists()) {
-      const data = docSnap.data();
-      for (let key in data) {
-        const el = document.getElementById(key);
-        if (el) el.value = data[key];
+    getDoc(fichaRef).then(docSnap => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        Object.keys(data).forEach(key => {
+          const el = document.getElementById(key);
+          if (el) el.value = data[key];
+        });
+        updateCalculos();
+        updateBarraVisual('pv');
+        updateBarraVisual('san');
+        updateBarraVisual('pe');
       }
-      updateCalculos();
-      updateBarras();
-      updateLinhas();
-    }
+    });
     showFicha();
   }
 });
 
-/* ===== CALCULOS ===== */
+// ======= FUNÇÕES DE CÁLCULO =======
+function limitarAtributo(valor) {
+  if (valor > 6) return 6;
+  if (valor < 0) return 0;
+  return valor;
+}
+
 function updateCalculos() {
-  const cor = Math.min(+document.getElementById('cor-val').value || 0, 6);
-  const men = Math.min(+document.getElementById('men-val').value || 0, 6);
-  const ins = Math.min(+document.getElementById('ins-val').value || 0, 6);
-  const pre = Math.min(+document.getElementById('pre-val').value || 0, 6);
-  const con = Math.min(+document.getElementById('con-val').value || 0, 6);
-  const exp = +document.getElementById('exposicao').value || 0;
+    const cor = limitarAtributo(+document.getElementById('cor-val').value);
+    const men = limitarAtributo(+document.getElementById('men-val').value);
+    const ins = limitarAtributo(+document.getElementById('ins-val').value);
+    const con = limitarAtributo(+document.getElementById('con-val').value);
+    const exp = +document.getElementById('exposicao').value || 0;
 
-  const mults = [15,20,25,30,35,40,45,50,55,60];
-  const mult = mults[exp] || 15;
+    document.getElementById('cor-val').value = cor;
+    document.getElementById('men-val').value = men;
+    document.getElementById('ins-val').value = ins;
+    document.getElementById('con-val').value = con;
 
-  document.getElementById('pv-max').value = mult + 2*cor;
-  document.getElementById('san-max').value = mult + 2*men;
-  document.getElementById('pe-max').value = (5 + 10*exp) + 2*con;
+    // Definir máximos de acordo com exposição
+    const expMap = [
+      {pv:15, san:15, pe:5, def:10},
+      {pv:20, san:20, pe:10, def:12},
+      {pv:25, san:25, pe:15, def:14},
+      {pv:30, san:30, pe:20, def:16},
+      {pv:35, san:35, pe:25, def:18},
+      {pv:40, san:40, pe:30, def:20},
+      {pv:45, san:45, pe:35, def:22},
+      {pv:50, san:50, pe:40, def:24},
+      {pv:55, san:55, pe:45, def:26},
+      {pv:60, san:60, pe:50, def:28},
+    ];
 
-  updateDefesa();
-  updateBarras();
+    const maxVals = expMap[exp] || expMap[0];
+    document.getElementById('pv-max').value = maxVals.pv + 2*cor;
+    document.getElementById('san-max').value = maxVals.san + 2*men;
+    document.getElementById('pe-max').value = maxVals.pe + 2*con;
+
+    updateDefesa();
+    updateBarraVisual('pv');
+    updateBarraVisual('san');
+    updateBarraVisual('pe');
 }
 
 function updateDefesa() {
-  const ins = +document.getElementById('ins-val').value || 0;
-  const equip = +document.getElementById('def-equip').value || 0;
-  const bonus = +document.getElementById('def-bonus').value || 0;
-  document.getElementById('defesa-val').innerText = 10 + ins + equip + bonus;
+    const ins = limitarAtributo(+document.getElementById('ins-val').value);
+    const equip = +document.getElementById('def-equip').value || 0;
+    const bonus = +document.getElementById('def-bonus').value || 0;
+    document.getElementById('defesa-val').innerText = 10 + ins + equip + bonus;
 }
 
-/* ===== BARRAS ===== */
-function updateBarra(id) {
-  const atualInput = document.getElementById(`${id}-atual`);
-  const maxInput = document.getElementById(`${id}-max`);
-  let atual = Math.min(+atualInput.value || 0, +maxInput.value);
-  atualInput.value = atual;
+function updateBarraVisual(tipo) {
+    const atual = +document.getElementById(`${tipo}-atual`).value || 0;
+    const max = +document.getElementById(`${tipo}-max`).value || 1;
+    const percent = Math.min((atual / max) * 100, 100);
 
-  const barra = document.getElementById(`barra-${id}`);
-  const perc = (atual / +maxInput.value) * 100;
-  barra.style.background = id==='pv' ? `linear-gradient(90deg, #800000 ${perc}%, #333 ${perc}%)`
-                  : id==='san' ? `linear-gradient(90deg, #4a0072 ${perc}%, #333 ${perc}%)`
-                  : `linear-gradient(90deg, #0d5 ${perc}%, #333 ${perc}%)`;
+    const barra = document.getElementById(`barra-${tipo}`);
+    barra.style.width = `${percent}%`;
 
-  barra.querySelector('span')?.remove();
-  const span = document.createElement('span');
-  span.innerText = `${atual}/${maxInput.value}`;
-  barra.appendChild(span);
+    // Ajustar cor
+    if(percent <= 30) barra.style.background = '#555';
+    else if(percent <= 70) barra.style.background = '#888';
+    else barra.style.background = tipo === 'pv' ? 'red' : tipo === 'san' ? 'purple' : 'green';
 }
 
-function updateBarras() {
-  updateBarra('pv');
-  updateBarra('san');
-  updateBarra('pe');
+function updateEquilibrio() {
+    const val = +document.getElementById('equilibrio').value;
+    document.getElementById('barra-equilibrio').style.setProperty('--pos', `${(val+10)*5}%`);
 }
 
-/* ===== LINHAS CARTESIANAS ===== */
-function updateLinhas() {
-  const eq = +document.getElementById('equilibrio').value;
-  const exp = +document.getElementById('exposicao').value;
-
-  const barraEq = document.getElementById('barra-equilibrio');
-  barraEq.style.background = `linear-gradient(to right, #b30000 0%, #b30000 ${50+eq*5}%, #444 ${50+eq*5}%, #f0e68c 100%)`;
-
-  const barraExp = document.getElementById('barra-exposicao');
-  barraExp.style.background = `repeating-linear-gradient(45deg, #111 0%, #333 10%, #6f00ff 10%, #6f00ff ${(exp+1)*10}%)`;
+function updateExposicao() {
+    updateCalculos();
 }
 
-/* ===== INPUTS DE PERÍCIAS ===== */
-document.querySelectorAll('.pericias input').forEach(inp=>{
-  inp.setAttribute('type','number');
-  inp.setAttribute('min','0');
-});
-
-/* ===== EXIBIR ABAS ===== */
-function showTab(id) {
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-/* ===== SALVAR FICHA ===== */
-async function salvarFicha() {
+// ======= SALVAR FICHA =======
+function salvarFicha() {
   const user = auth.currentUser;
-  if (!user) return alert('Nenhum usuário logado!');
+  if (!user) return alert("Usuário não logado");
+
+  const campos = [
+    'nome','idade','origem','ocupacao','marca','motivacao',
+    'cor-val','men-val','ins-val','pre-val','con-val',
+    'pv-atual','pv-max','san-atual','san-max',
+    'pe-atual','pe-max','def-equip','def-bonus',
+    'equilibrio','exposicao'
+  ];
 
   const data = {};
-  document.querySelectorAll('#ficha input').forEach(inp=>{
-    if(inp.id) data[inp.id] = inp.value;
+  campos.forEach(id => {
+    const el = document.getElementById(id);
+    if(el) data[id] = el.value;
   });
 
-  try {
-    await setDoc(doc(db, 'fichas', user.uid), data);
-    alert('Ficha salva com sucesso!');
-  } catch(err) {
-    console.error(err);
-    alert('Erro ao salvar ficha: '+err.message);
-  }
+  setDoc(doc(db, 'fichas', user.uid), data)
+    .then(() => alert("Ficha salva com sucesso!"))
+    .catch(err => alert("Erro ao salvar ficha: " + err.message));
 }
 
-/* ===== EVENTOS ===== */
-document.addEventListener('DOMContentLoaded', ()=>{
+// ======= ABAS =======
+function showTab(tabId) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    const tab = document.getElementById(tabId);
+    if(tab) tab.classList.add('active');
+}
+
+function showFicha() {
+  document.getElementById('auth').style.display = 'none';
+  document.getElementById('ficha').style.display = 'block';
+}
+
+// ======= EVENTOS =======
+document.addEventListener("DOMContentLoaded", () => {
   document.getElementById('btn-login').addEventListener('click', login);
   document.getElementById('btn-signup').addEventListener('click', signup);
   document.getElementById('btn-salvar').addEventListener('click', salvarFicha);
+  document.getElementById('equilibrio').addEventListener('input', updateEquilibrio);
+  document.getElementById('exposicao').addEventListener('input', updateExposicao);
 
-  document.querySelectorAll('input[id$="-atual"]').forEach(inp=>{
-    inp.addEventListener('input', ()=>updateBarras());
-  });
-
-  document.getElementById('equilibrio').addEventListener('input', updateLinhas);
-  document.getElementById('exposicao').addEventListener('input', ()=>{updateCalculos(); updateLinhas();});
-  document.querySelectorAll('.atributo-input').forEach(inp=>{
-    inp.addEventListener('input', ()=>{
-      if(+inp.value>6) inp.value=6;
-      updateCalculos();
-      updateBarras();
-    });
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', e => showTab(e.target.dataset.tab));
   });
 });
