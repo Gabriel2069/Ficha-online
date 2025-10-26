@@ -1,151 +1,161 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Ficha RPG Online</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Ficha RPG Ordem Paranormal</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- === LOGIN === -->
-    <div id="auth">
-        <h1>Login</h1>
-        <input id="email" placeholder="Email" type="email">
-        <input id="password" placeholder="Senha" type="password">
-        <button id="btn-login">Login</button>
-        <button id="btn-signup">Cadastrar</button>
+  <!-- LOGIN -->
+  <div id="auth">
+    <h1>Login / Cadastro</h1>
+    <input id="email" placeholder="Email" type="email">
+    <input id="password" placeholder="Senha" type="password">
+    <button id="btn-login">Login</button>
+    <button id="btn-signup">Cadastrar</button>
+  </div>
+
+  <!-- FICHA -->
+  <div id="ficha" style="display:none;">
+    <h1>Ficha de RPG - Ordem Paranormal</h1>
+
+    <!-- Topo: 2 colunas -->
+    <div class="topo">
+      <div class="coluna">
+        <label>Nome: <input id="nome"></label>
+        <label>Idade: <input id="idade" type="number"></label>
+        <label>Origem: <input id="origem"></label>
+      </div>
+      <div class="coluna">
+        <label>Ocupação: <input id="ocupacao"></label>
+        <label>Marca: <input id="marca"></label>
+        <label>Motivação: <input id="motivacao"></label>
+      </div>
     </div>
 
-    <!-- === FICHA === -->
-    <div id="ficha" style="display:none;">
-        <h1>Ficha de RPG</h1>
+    <!-- Meio: 3 colunas (esquerda, pentágono, direita) -->
+    <div class="meio-container">
+      <!-- Coluna esquerda: PE / Defesa -->
+      <div class="coluna-lateral esquerda">
+        <label>Pontos de Esforço: <input id="pe-atual" type="number"> / <span id="pe-max">0</span>
+          <div id="barra-pe" class="barra verde"><span class="barra-num"></span></div>
+        </label>
+        <label>Defesa: <div id="defesa-val" class="escudo">10</div>
+          + <input id="def-equip" type="number" placeholder="equipamento">
+          + <input id="def-bonus" type="number" placeholder="bônus">
+        </label>
+      </div>
 
-        <!-- Topo -->
-        <div class="topo">
-            <div class="coluna">
-                <label>Nome: <input id="nome" type="text"></label>
-                <label>Idade: <input id="idade" type="number"></label>
-                <label>Origem: <input id="origem" type="text"></label>
-            </div>
-            <div class="coluna">
-                <label>Ocupação: <input id="ocupacao" type="text"></label>
-                <label>Marca: <input id="marca" type="text"></label>
-                <label>Motivação: <input id="motivacao" type="text"></label>
-            </div>
+      <!-- Coluna central: Pentágono -->
+      <div class="coluna-meio">
+        <svg id="pentagono" width="260" height="260" viewBox="0 0 200 200">
+          <polygon points="100,10 190,70 155,180 45,180 10,70" fill="none" stroke="#6f00ff" stroke-width="2"/>
+          <circle id="c-cor" cx="100" cy="10" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2"/>
+          <circle id="c-men" cx="190" cy="70" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2"/>
+          <circle id="c-ins" cx="155" cy="180" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2"/>
+          <circle id="c-pre" cx="45" cy="180" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2"/>
+          <circle id="c-con" cx="10" cy="70" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2"/>
+          <text x="100" y="15" text-anchor="middle" class="pent-text" id="txt-cor">0</text>
+          <text x="190" y="75" text-anchor="middle" class="pent-text" id="txt-men">0</text>
+          <text x="155" y="185" text-anchor="middle" class="pent-text" id="txt-ins">0</text>
+          <text x="45" y="185" text-anchor="middle" class="pent-text" id="txt-pre">0</text>
+          <text x="10" y="75" text-anchor="middle" class="pent-text" id="txt-con">0</text>
+        </svg>
+        <div class="atributos">
+          <input id="cor-val" type="number" onchange="updateCalculos()">COR
+          <input id="men-val" type="number" onchange="updateCalculos()">MEN
+          <input id="ins-val" type="number" onchange="updateCalculos()">INS
+          <input id="pre-val" type="number" onchange="updateCalculos()">PRE
+          <input id="con-val" type="number" onchange="updateCalculos()">CON
         </div>
+      </div>
 
-        <!-- Meio: Pentágono com atributos -->
-        <div class="meio">
-            <svg viewBox="0 0 200 200">
-                <polygon points="100,10 190,70 155,180 45,180 10,70" />
-                <circle cx="100" cy="10" r="20"/>
-                <circle cx="190" cy="70" r="20"/>
-                <circle cx="155" cy="180" r="20"/>
-                <circle cx="45" cy="180" r="20"/>
-                <circle cx="10" cy="70" r="20"/>
-            </svg>
-
-            <!-- Inputs dentro dos círculos -->
-            <div class="atributos">
-                <input id="cor-val" type="number" onchange="updateCalculos()">
-                <input id="men-val" type="number" onchange="updateCalculos()">
-                <input id="ins-val" type="number" onchange="updateCalculos()">
-                <input id="pre-val" type="number" onchange="updateCalculos()">
-                <input id="con-val" type="number" onchange="updateCalculos()">
-            </div>
-        </div>
-
-        <!-- Barras à esquerda e direita do pentágono -->
-        <div class="barras">
-            <div class="esquerda">
-                <div class="barra-container">
-                    <label>PE:</label>
-                    <div class="barra verde"><div id="barra-pe"></div></div>
-                    <input id="pe-atual" type="number" onchange="updateBarra('pe')">
-                    / <input id="pe-max" type="number" readonly>
-                </div>
-
-                <div class="barra-container">
-                    <label>Defesa:</label>
-                    <div id="defesa-val" class="escudo">10</div>
-                    + <input id="def-equip" type="number" onchange="updateDefesa()"> 
-                    + <input id="def-bonus" type="number" onchange="updateDefesa()">
-                </div>
-            </div>
-
-            <div class="direita">
-                <div class="barra-container">
-                    <label>PV:</label>
-                    <div class="barra vermelha"><div id="barra-pv"></div></div>
-                    <input id="pv-atual" type="number" onchange="updateBarra('pv')">
-                    / <input id="pv-max" type="number" readonly>
-                </div>
-
-                <div class="barra-container">
-                    <label>Sanidade:</label>
-                    <div class="barra roxa"><div id="barra-san"></div></div>
-                    <input id="san-atual" type="number" onchange="updateBarra('san')">
-                    / <input id="san-max" type="number" readonly>
-                </div>
-            </div>
-        </div>
-
-        <!-- Linhas de Equilíbrio e Exposição -->
-        <div class="linhas">
-            <label>Equilíbrio:</label>
-            <div class="line-bar"><span id="barra-equilibrio"></span></div>
-            <input id="equilibrio" type="range" min="-10" max="10" value="0" onchange="updateEquilibrio()">
-
-            <label>Exposição:</label>
-            <div class="line-bar"><span id="barra-exposicao"></span></div>
-            <input id="exposicao" type="range" min="0" max="10" value="0" onchange="updateExposicao()">
-        </div>
-
-        <!-- Perícias -->
-        <div class="pericias">
-            <div class="coluna-pericia">
-                <h3>Corpo (COR)</h3>
-                Acrobacia: <input type="number"><br>
-                Atletismo: <input type="number"><br>
-            </div>
-            <div class="coluna-pericia">
-                <h3>Mente (MEN)</h3>
-                Psicologia: <input type="number"><br>
-                Raciocínio: <input type="number"><br>
-            </div>
-            <div class="coluna-pericia">
-                <h3>Instinto (INS)</h3>
-                Percepção: <input type="number"><br>
-                Reflexos: <input type="number"><br>
-            </div>
-            <div class="coluna-pericia">
-                <h3>Presença (PRE)</h3>
-                Carisma: <input type="number"><br>
-                Liderança: <input type="number"><br>
-            </div>
-            <div class="coluna-pericia">
-                <h3>Constituição (CON)</h3>
-                Resistência: <input type="number"><br>
-                Vitalidade: <input type="number"><br>
-            </div>
-        </div>
-
-        <!-- Abas -->
-        <div class="abas">
-            <button onclick="showTab('armas')">Armas</button>
-            <button onclick="showTab('habilidades')">Habilidades</button>
-        </div>
-
-        <div id="armas" class="tab">
-            <table>
-                <tr><th>Nome</th><th>Tipo</th><th>Alcance</th><th>Dano</th><th>Crítico</th><th>Extra</th></tr>
-                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-            </table>
-        </div>
-        <div id="habilidades" class="tab"></div>
-
-        <button id="btn-salvar">Salvar</button>
+      <!-- Coluna direita: PV / SAN -->
+      <div class="coluna-lateral direita">
+        <label>Pontos de Vida: <input id="pv-atual" type="number"> / <span id="pv-max">0</span>
+          <div id="barra-pv" class="barra vermelha"><span class="barra-num"></span></div>
+        </label>
+        <label>Sanidade: <input id="san-atual" type="number"> / <span id="san-max">0</span>
+          <div id="barra-san" class="barra roxa"><span class="barra-num"></span></div>
+        </label>
+      </div>
     </div>
 
-    <script type="module" src="script.js"></script>
+    <!-- Linhas Cartesianos -->
+    <div class="linhas">
+      <label>Equilíbrio: <input id="equilibrio" type="range" min="-10" max="10" value="0" onchange="updateEquilibrioBar()"></label>
+      <div id="barra-equilibrio" class="barra-equil"></div>
+      <label>Exposição: <input id="exposicao" type="range" min="0" max="10" value="0" onchange="updateExposicaoBar()"></label>
+      <div id="barra-exposicao" class="barra-exp"></div>
+    </div>
+
+    <!-- Perícias -->
+    <div class="pericias">
+      <div class="coluna-pericia"><h3>Corpo (COR)</h3>
+        Acrobacia: <input type="number"><br>
+        Atletismo: <input type="number"><br>
+        Luta: <input type="number"><br>
+        Fortitude: <input type="number"><br>
+        Furtividade: <input type="number">
+      </div>
+      <div class="coluna-pericia"><h3>Mente (MEN)</h3>
+        Rituais: <input type="number"><br>
+        Medicina: <input type="number"><br>
+        Erudição: <input type="number"><br>
+        Concentração: <input type="number"><br>
+        Tática: <input type="number"><br>
+        Pilotagem: <input type="number">
+      </div>
+      <div class="coluna-pericia"><h3>Instinto (INS)</h3>
+        Percepção: <input type="number"><br>
+        Reflexo: <input type="number"><br>
+        Intuição: <input type="number"><br>
+        Sobrevivência: <input type="number"><br>
+        Iniciática: <input type="number"><br>
+        Adestramento: <input type="number">
+      </div>
+      <div class="coluna-pericia"><h3>Presença (PRE)</h3>
+        Intimidação: <input type="number"><br>
+        Persuasão: <input type="number"><br>
+        Encenação: <input type="number"><br>
+        Crença: <input type="number"><br>
+        Diplomacia: <input type="number"><br>
+        Vontade: <input type="number">
+      </div>
+      <div class="coluna-pericia"><h3>Conhecimento (CON)</h3>
+        Investigação: <input type="number"><br>
+        Sobrenatural: <input type="number"><br>
+        Ciências: <input type="number"><br>
+        Tecnologia: <input type="number"><br>
+        Crime: <input type="number"><br>
+        Pontaria: <input type="number">
+      </div>
+    </div>
+
+    <!-- Abas -->
+    <div class="abas">
+      <button onclick="showTab('armas')">Armas</button>
+      <button onclick="showTab('habilidades')">Habilidades</button>
+      <button onclick="showTab('poderes')">Poderes</button>
+      <button onclick="showTab('inventario')">Inventário</button>
+      <button onclick="showTab('dados')">Dados</button>
+    </div>
+
+    <div id="armas" class="tab">
+      <table>
+        <tr><th>Nome</th><th>Tipo</th><th>Alcance</th><th>Dano</th><th>Crítico</th><th>Extra</th></tr>
+        <tr><td><input></td><td><input></td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+      </table>
+    </div>
+
+    <div id="habilidades" class="tab"></div>
+    <div id="poderes" class="tab"></div>
+    <div id="inventario" class="tab"></div>
+    <div id="dados" class="tab"></div>
+
+    <button id="btn-salvar">Salvar Ficha</button>
+  </div>
+
+<script type="module" src="script.js"></script>
 </body>
 </html>
