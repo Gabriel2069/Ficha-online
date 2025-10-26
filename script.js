@@ -1,4 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"; 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
 import { query, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 import { 
   getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged 
@@ -92,7 +92,6 @@ async function showFichaList() {
     card.className = "ficha-card";
     card.innerHTML = `
       <h3>${data.nome || "Sem nome"}</h3>
-      <p>ID: ${docSnap.id}</p>
     `;
     card.onclick = () => openFicha(docSnap.id);
     cardsContainer.appendChild(card);
@@ -154,7 +153,7 @@ function preencherPericias(categoria, valores) {
 
   Object.keys(valores).forEach(nome => {
     const label = Array.from(coluna.querySelectorAll('label'))
-                       .find(l => l.textContent.includes(nome));
+                       .find(l => l.childNodes[0].textContent.trim().replace(':','') === nome);
     if (label) label.querySelector('input').value = valores[nome];
   });
 }
@@ -183,11 +182,11 @@ function updateCalculos() {
   // Sincroniza os valores das bolas do pentágono com os atributos abaixo
   document.querySelectorAll('.atributos input').forEach(input => {
     switch(input.id){
-      case 'cor-val': input.value = cor; break;
-      case 'men-val': input.value = men; break;
-      case 'ins-val': input.value = ins; break;
-      case 'pre-val': input.value = pre; break;
-      case 'con-val': input.value = con; break;
+      case 'cor-input': input.value = cor; break;
+      case 'men-input': input.value = men; break;
+      case 'ins-input': input.value = ins; break;
+      case 'pre-input': input.value = pre; break;
+      case 'con-input': input.value = con; break;
     }
   });
 
@@ -222,38 +221,48 @@ function updateDefesa() {
   document.getElementById('defesa-val').innerText = 10 + ins + equip + bonus;
 }
 
-// === Atualiza barras coloridas ===
-function updateBarra(tipo) {
-  const atual = parseInt(document.getElementById(`${tipo}-atual`).value)||0;
-  const max = parseInt(document.getElementById(`${tipo}-max`).value)||1;
+// === Atualiza barras coloridas (agora com limite atual <= max) ===
+function updateBarraVisual(tipo) {
+  const atualInput = document.getElementById(`${tipo}-atual`);
+  const maxInput = document.getElementById(`${tipo}-max`);
+  let atual = parseInt(atualInput.value) || 0;
+  const max = parseInt(maxInput.value) || 1;
+  
+  // Limita atual a <= max
+  if (atual > max) atual = max;
+  atualInput.value = atual;
+  
   const barra = document.getElementById(`barra-${tipo}`);
-  barra.style.background = barra.classList.contains('vermelha') ? 'linear-gradient(90deg,#440000,#ff4040)' :
-                           barra.classList.contains('roxa') ? 'linear-gradient(90deg,#4a0072,#b84dff)' :
-                           'linear-gradient(90deg,#055,#1f8)';
-
+  const percent = (atual / max) * 100;
+  barra.style.width = `${percent}%`;
+  
+  // Adiciona número na barra
   barra.innerHTML = `<span class="barra-num">${atual}/${max}</span>`;
-  barra.style.width = '100%';
-  barra.querySelector('.barra-num').style.left = `${Math.min((atual/max)*100,100)}%`;
 }
 
 function updateBarras() {
-  ['pv','san','pe'].forEach(t => updateBarra(t));
+  ['pv','san','pe'].forEach(t => updateBarraVisual(t));
 }
 
 // === Equilíbrio e Exposição ===
 function updateEquilibrio() {
-  const val = parseInt(document.getElementById('equilibrio').value)||0;
+  const val = parseInt(document.getElementById('equilibrio').value) || 0;
   const barra = document.getElementById('barra-equilibrio');
-  const percent = ((val+10)/20)*100;
-  barra.style.background = `linear-gradient(to right,#550000 0%, #555 ${percent}%, #f0e68c 100%)`;
+  const percent = ((val + 10) / 20) * 100;  // De -10 a 10, mapeia para 0-100%
+  barra.style.background = `linear-gradient(to right, #550000 0%, #000 ${50 - percent/2}%, #fffacd ${50 + percent/2}%, #ffff00 100%)`;  // Vermelho/preto esquerda, amarelo/branco neon direita
 }
 
 function updateExposicao() {
   updateCalculos();
-  const val = parseInt(document.getElementById('exposicao').value)||0;
+  const val = parseInt(document.getElementById('exposicao').value) || 0;
   const barra = document.getElementById('barra-exposicao');
-  const percent = (val/10)*100;
-  barra.style.background = `repeating-linear-gradient(to right, #111 0% ${percent}%, #333 ${percent}% ${percent+10}%, #6f00ff ${percent+10}% ${percent+20}%)`;
+  barra.innerHTML = '';  // Limpa
+  for (let i = 0; i < 10; i++) {
+    const level = document.createElement('div');
+    level.className = 'exposicao-level';
+    if (i <= val) level.classList.add('active');  // Destaca até o nível atual
+    barra.appendChild(level);
+  }
 }
 
 // ======= SALVAR =======
@@ -281,7 +290,7 @@ function salvarFicha() {
   // Salva todas as perícias
   const periciasDiv = document.querySelectorAll('.pericias .coluna-pericia');
   periciasDiv.forEach(coluna => {
-    const categoria = coluna.querySelector('h3').innerText.match(/\((\w+)\)/)[1];
+    const categoria = coluna.querySelector('h3').innerText.match(/\$(\w+)\$/)[1];
     const labels = coluna.querySelectorAll('label');
     data[categoria] = {};
     labels.forEach(label => {
@@ -330,4 +339,12 @@ document.addEventListener("DOMContentLoaded", () => {
       input.addEventListener('input', updateCalculos);
     }
   });
+  
+  // Adiciona listeners para equilíbrio e exposição
+  document.getElementById('equilibrio').addEventListener('input', updateEquilibrio);
+  document.getElementById('exposicao').addEventListener('input', updateExposicao);
+  
+  // Inicializa barras
+  updateEquilibrio();
+  updateExposicao();
 });
