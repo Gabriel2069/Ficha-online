@@ -1,18 +1,179 @@
-.topo { display: flex; }
-.coluna { flex: 1; }
-.meio { text-align: center; }
-.barras { display: flex; }
-.esquerda, .direita { flex: 1; }
-.barra { height: 20px; background: gray; }
-.vermelha { background: red; }
-.roxa { background: purple; }
-.verde { background: green; }
-.escudo { display: inline-block; width: 30px; height: 30px; background: blue; text-align: center; line-height: 30px; }
-.linhas { margin: 20px 0; }
-#barra-equilibrio { height: 20px; background: linear-gradient(to right, darkred 0% 50%, gray 50%, yellow 50% 100%); }
-#barra-exposicao { height: 20px; background: repeating-linear-gradient(to right, black 0% 10%, white 10% 20%); }
-.pericias { display: flex; }
-.coluna-pericia { flex: 1; }
-.abas { margin: 20px 0; }
-.tab { display: none; }
-.tab.active { display: block; }
+/* === Reset e base === */
+body {
+  font-family: "Poppins", sans-serif;
+  background: radial-gradient(circle at top, #111 0%, #000 80%);
+  color: #eee;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+h1, h3 {
+  text-align: center;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+input, button {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #eee;
+  border-radius: 5px;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+input:focus, button:hover {
+  border-color: #6f00ff;
+  outline: none;
+  box-shadow: 0 0 8px #6f00ff55;
+}
+
+button {
+  cursor: pointer;
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+}
+
+/* === Layout principal === */
+#auth, #ficha {
+  background: rgba(20, 20, 20, 0.9);
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 50px;
+  width: 90%;
+  max-width: 900px;
+  box-shadow: 0 0 20px #000;
+}
+
+/* === Topo === */
+.topo {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.coluna label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* === Meio (pentágono) === */
+.meio {
+  text-align: center;
+  position: relative;
+  margin: 30px 0;
+}
+
+.meio svg {
+  width: 260px;
+  height: 260px;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 8px #6f00ff55);
+}
+
+.meio polygon {
+  stroke: #6f00ff;
+  stroke-width: 2;
+}
+
+.meio circle {
+  fill: #1a1a1a;
+  stroke: #6f00ff88;
+  stroke-width: 1;
+}
+
+.meio text {
+  fill: #eee;
+  font-size: 12px;
+}
+
+.atributos {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+/* === Barras === */
+.barras {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.esquerda, .direita {
+  flex: 1;
+}
+
+.barra {
+  width: 100%;
+  height: 15px;
+  border-radius: 10px;
+  margin-top: 5px;
+  transition: width 0.3s ease;
+}
+
+.vermelha { background: linear-gradient(90deg, #800000, #ff4040); }
+.roxa { background: linear-gradient(90deg, #4a0072, #b84dff); }
+.verde { background: linear-gradient(90deg, #0d5, #1f8); }
+
+.escudo {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background: #202040;
+  color: #fff;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 8px #6f00ff55;
+}
+
+/* === Linhas === */
+.linhas {
+  margin: 30px 0;
+}
+
+#barra-equilibrio {
+  height: 10px;
+  border-radius: 10px;
+  background: linear-gradient(to right, #b30000 0%, #444 50%, #f0e68c 100%);
+}
+
+#barra-exposicao {
+  height: 10px;
+  border-radius: 10px;
+  background: repeating-linear-gradient(
+    45deg,
+    #111 0%,
+    #333 10%,
+    #6f00ff 10%,
+    #6f00ff 15%
+  );
+}
+
+/* === Perícias === */
+.pericias {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.coluna-pericia {
+  flex: 1;
+  min-width: 200px;
+  background: #111;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: inset 0 0 
