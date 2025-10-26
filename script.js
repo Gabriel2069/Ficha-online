@@ -1,4 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"; 
 import { query, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 import { 
   getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged 
@@ -20,7 +20,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// ======= SISTEMA DE NOTIFICAÇÃO =======
+// ======= NOTIFICAÇÃO =======
 function showNotification(msg, type = "info") {
   const div = document.createElement("div");
   div.className = `notification ${type}`;
@@ -38,19 +38,18 @@ function signup() {
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
   
-createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
-  .then((userCredential) => {
-    const user = userCredential.user;
+  createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+    .then((userCredential) => {
+      const user = userCredential.user;
 
-    // Cria documento de perfil com role "jogador"
-    setDoc(doc(db, "usuarios", user.uid), {
-      email: user.email,
-      role: "jogador" // ou "mestre" se for você
-    });
+      setDoc(doc(db, "usuarios", user.uid), {
+        email: user.email,
+        role: "jogador"
+      });
 
-    showNotification("Conta criada com sucesso!", "success");
-  })
-  .catch(error => showNotification("Erro ao cadastrar: " + error.message, "error"));
+      showNotification("Conta criada com sucesso!", "success");
+    })
+    .catch(error => showNotification("Erro ao cadastrar: " + error.message, "error"));
 }
 
 function login() {
@@ -99,7 +98,6 @@ async function showFichaList() {
     cardsContainer.appendChild(card);
   });
 
-  // Botão para criar nova ficha
   const newCard = document.createElement("div");
   newCard.className = "ficha-card add-card";
   newCard.innerHTML = "+ Nova Ficha";
@@ -121,9 +119,9 @@ async function createNewFicha() {
 
   showNotification("Nova ficha criada!", "success");
   openFicha(fichaId);
-} // ← esta é a chave correta
+}
 
-
+// ======= ABRIR FICHA =======
 async function openFicha(fichaId) {
   const fichaRef = doc(db, "fichas", fichaId);
   const docSnap = await getDoc(fichaRef);
@@ -134,18 +132,34 @@ async function openFicha(fichaId) {
       const el = document.getElementById(key);
       if (el) el.value = data[key];
     });
+
+    // Preenche as perícias
+    if (data.COR) preencherPericias('COR', data.COR);
+    if (data.MEN) preencherPericias('MEN', data.MEN);
+    if (data.INS) preencherPericias('INS', data.INS);
+    if (data.PRE) preencherPericias('PRE', data.PRE);
+    if (data.CON) preencherPericias('CON', data.CON);
   }
 
-  document.getElementById('fichas-list').remove();
+  document.getElementById('fichas-list')?.remove();
   showFicha();
+  updateCalculos();
 }
 
-// ======= ESTADO DO USUÁRIO =======
-onAuthStateChanged(auth, user => {
-  if (user) showFichaList();
-});
+// ======= PERÍCIAS =======
+function preencherPericias(categoria, valores) {
+  const coluna = Array.from(document.querySelectorAll('.coluna-pericia'))
+                      .find(c => c.querySelector('h3').innerText.includes(categoria));
+  if (!coluna) return;
 
-// ======= CÁLCULOS (mantidos do original) =======
+  Object.keys(valores).forEach(nome => {
+    const label = Array.from(coluna.querySelectorAll('label'))
+                       .find(l => l.textContent.includes(nome));
+    if (label) label.querySelector('input').value = valores[nome];
+  });
+}
+
+// ======= CALCULOS =======
 function limitarAtributo(valor) {
   if (valor > 6) return 6;
   if (valor < 0) return 0;
@@ -156,13 +170,26 @@ function updateCalculos() {
   const cor = limitarAtributo(+document.getElementById('cor-val').value);
   const men = limitarAtributo(+document.getElementById('men-val').value);
   const ins = limitarAtributo(+document.getElementById('ins-val').value);
+  const pre = limitarAtributo(+document.getElementById('pre-val').value);
   const con = limitarAtributo(+document.getElementById('con-val').value);
   const exp = +document.getElementById('exposicao').value || 0;
 
   document.getElementById('cor-val').value = cor;
   document.getElementById('men-val').value = men;
   document.getElementById('ins-val').value = ins;
+  document.getElementById('pre-val').value = pre;
   document.getElementById('con-val').value = con;
+
+  // Sincroniza os valores das bolas do pentágono com os atributos abaixo
+  document.querySelectorAll('.atributos input').forEach(input => {
+    switch(input.id){
+      case 'cor-val': input.value = cor; break;
+      case 'men-val': input.value = men; break;
+      case 'ins-val': input.value = ins; break;
+      case 'pre-val': input.value = pre; break;
+      case 'con-val': input.value = con; break;
+    }
+  });
 
   const expMap = [
     {pv:15, san:15, pe:5, def:10},
@@ -225,33 +252,29 @@ function salvarFicha() {
     if (el) data[id] = el.value;
   });
 
-   // Salva todas as perícias dinamicamente
+  // Salva todas as perícias
   const periciasDiv = document.querySelectorAll('.pericias .coluna-pericia');
   periciasDiv.forEach(coluna => {
-    const categoria = coluna.querySelector('h3').innerText.match(/\((\w+)\)/)[1]; // COR, MEN, etc.
+    const categoria = coluna.querySelector('h3').innerText.match(/\((\w+)\)/)[1];
     const labels = coluna.querySelectorAll('label');
     data[categoria] = {};
-
     labels.forEach(label => {
       const input = label.querySelector('input');
-      if (input) {
-        const nome = label.childNodes[0].textContent.trim().replace(':', '');
+      if(input){
+        const nome = label.childNodes[0].textContent.trim().replace(':','');
         data[categoria][nome] = input.value;
       }
     });
-});
+  });
 
-  
-  // Adiciona o campo owner para controle de acesso
   data.owner = user.uid;
-
   const fichaId = `${user.uid}-${data.nome || "semnome"}`;
   setDoc(doc(db, "fichas", fichaId), data)
     .then(() => showNotification("Ficha salva com sucesso!", "success"))
     .catch(err => showNotification("Erro ao salvar: " + err.message, "error"));
 }
 
-// ======= VOLTAR PARA SELEÇÃO =======
+// ======= FUNÇÕES AUXILIARES =======
 function voltarParaSelecao() {
   document.getElementById('ficha').style.display = 'none';
   showFichaList();
@@ -262,10 +285,23 @@ function showFicha() {
   document.getElementById('ficha').style.display = 'block';
 }
 
+// ======= ESTADO DO USUÁRIO =======
+onAuthStateChanged(auth, user => {
+  if (user) showFichaList();
+});
+
 // ======= LISTENERS =======
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById('btn-login').addEventListener('click', login);
   document.getElementById('btn-signup').addEventListener('click', signup);
   document.getElementById('btn-salvar').addEventListener('click', salvarFicha);
   document.getElementById('voltarSelecaoBtn').addEventListener('click', voltarParaSelecao);
+
+  // Atualiza atributos ao digitar na linha de baixo
+  ['cor-val','men-val','ins-val','pre-val','con-val'].forEach(id => {
+    const input = document.getElementById(id);
+    if(input){
+      input.addEventListener('input', updateCalculos);
+    }
+  });
 });
