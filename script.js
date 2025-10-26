@@ -6,7 +6,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyD3Qssht7axuM8aE4gQL965EBZJo-qzmsU",
   authDomain: "fichas-e87fd.firebaseapp.com",
   projectId: "fichas-e87fd",
-  storageBucket: "fichas-e87fd.firebasestorage.app",
+  storageBucket: "fichas-e87fd.appspot.com",
   messagingSenderId: "496979447757",
   appId: "1:496979447757:web:dc54dfdc358c558bc53e84",
 };
