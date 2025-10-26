@@ -222,14 +222,6 @@ function updateDefesa() {
   document.getElementById('defesa-val').innerText = 10 + ins + equip + bonus;
 }
 
-function updateBarraVisual(tipo) {
-  const atual = +document.getElementById(`${tipo}-atual`).value || 0;
-  const max = +document.getElementById(`${tipo}-max`).value || 1;
-  const percent = Math.min((atual / max) * 100, 100);
-  const barra = document.getElementById(`barra-${tipo}`);
-  barra.style.width = `${percent}%`;
-}
-
 // === Atualiza barras coloridas ===
 function updateBarra(tipo) {
   const atual = parseInt(document.getElementById(`${tipo}-atual`).value)||0;
