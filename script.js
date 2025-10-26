@@ -324,8 +324,8 @@ function showFicha() {
 // ======= MOSTRAR ABA =======
 function showTab(tabId) {
   const tabs = document.querySelectorAll('.tab');
-  tabs.forEach(tab => tab.style.display = 'none');
-  document.getElementById(tabId).style.display = 'block';
+  tabs.forEach(tab => tab.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
 }
 
 // ======= BOLINHAS MORRENDO/ENLOUQUECENDO =======
@@ -364,6 +364,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const input = document.getElementById(id);
     if(input){
       input.addEventListener('input', updateCalculos);
+    }
+  });
+  
+  // Listeners para atualizar barras quando atual muda
+  ['pv-atual','san-atual','pe-atual'].forEach(id => {
+    const input = document.getElementById(id);
+    if(input){
+      input.addEventListener('input', () => updateBarraVisual(id.split('-')[0]));
     }
   });
   
