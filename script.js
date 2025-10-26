@@ -233,10 +233,12 @@ function salvarFicha() {
     data[categoria] = {};
 
     labels.forEach(label => {
-      const nome = label.textContent.trim().replace(':', '');
       const input = label.querySelector('input');
-      data[categoria][nome] = input.value;
-  });
+      if (input) {
+        const nome = label.childNodes[0].textContent.trim().replace(':', '');
+        data[categoria][nome] = input.value;
+      }
+    });
 });
 
   
