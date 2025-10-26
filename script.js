@@ -15,29 +15,37 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// ======= LOGIN / SIGNUP =======
+// Login/Signup
 function signup() {
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
+
+console.log("Tentando cadastrar:", emailInput.value);
   
   createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
     .then(() => {
       alert("Conta criada com sucesso!");
-      showFicha();
+      showFicha(); // mostra a ficha após cadastro
     })
-    .catch(error => alert("Erro ao cadastrar: " + error.message));
+    .catch(error => {
+      console.error("Erro ao cadastrar:", error.message);
+      alert("Erro ao cadastrar: " + error.message);
+    });
 }
 
 function login() {
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
-  
+
   signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
     .then(() => {
       alert("Login bem-sucedido!");
       showFicha();
     })
-    .catch(error => alert("Erro ao fazer login: " + error.message));
+    .catch(error => {
+      console.error("Erro ao fazer login:", error.message);
+      alert("Erro ao fazer login: " + error.message);
+    });
 }
 
 // ======= CARREGAR FICHA =======
