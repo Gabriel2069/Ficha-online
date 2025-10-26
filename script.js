@@ -17,11 +17,23 @@ const db = getFirestore(app);
 
 // Login/Signup
 function signup() {
-  createUserWithEmailAndPassword(auth, email.value, password.value);
+  createUserWithEmailAndPassword(auth, email.value, password.value)
+    .then(() => {
+      showFicha(); // mostra a ficha após cadastro
+    })
+    .catch(error => {
+      console.error("Erro ao cadastrar:", error.message);
+      alert("Erro ao cadastrar: " + error.message);
+    });
 }
 
 function login() {
-  signInWithEmailAndPassword(auth, email.value, password.value).then(() => showFicha());
+  signInWithEmailAndPassword(auth, email.value, password.value)
+    .then(() => showFicha())
+    .catch(error => {
+      console.error("Erro ao fazer login:", error.message);
+      alert("Erro ao fazer login: " + error.message);
+    });
 }
 
 // Carregar ficha
@@ -86,8 +98,15 @@ function salvarFicha() {
             nome: document.getElementById('nome').value,
             // ... coletar todos os campos
         };
-        setDoc(doc(db, 'fichas', user.uid), data);
-    }
+      setDoc(doc(db, 'fichas', user.uid), data)
+       .then(() => {
+        alert("Ficha salva com sucesso!");
+      })
+      .catch(error => {
+        console.error("Erro ao salvar ficha:", error.message);
+        alert("Erro ao salvar ficha: " + error.message);
+      });
+  }
 }
 
 function showFicha() {
