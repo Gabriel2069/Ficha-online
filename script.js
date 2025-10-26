@@ -249,7 +249,7 @@ function updateEquilibrio() {
   const val = parseInt(document.getElementById('equilibrio').value) || 0;
   const barra = document.getElementById('barra-equilibrio');
   const percent = ((val + 10) / 20) * 100;  // 0% no centro (-10), 100% na direita (+10)
-  barra.style.background = `linear-gradient(to right, #550000 0%, #000 ${50 - percent/2}%, #fffacd ${50 + percent/2}%, #ffff00 100%)`;  // Meio a meio no centro, vermelho esquerda, amarelo direita
+  barra.style.background = `linear-gradient(to right, #550000 0%, #000 ${50 - percent/2}%, #fffacd ${50 + percent/2}%, #ffff00 100%)`;  // Vermelho esquerda, amarelo direita, meio a meio no centro
 }
 
 function updateExposicao() {
@@ -321,6 +321,24 @@ function showFicha() {
   document.getElementById('ficha').style.display = 'block';
 }
 
+// ======= MOSTRAR ABA =======
+function showTab(tabId) {
+  const tabs = document.querySelectorAll('.tab');
+  tabs.forEach(tab => tab.style.display = 'none');
+  document.getElementById(tabId).style.display = 'block';
+}
+
+// ======= BOLINHAS MORRENDO/ENLOUQUECENDO =======
+function toggleBolinha(type, index) {
+  const bolinhas = document.querySelectorAll(`.${type}-bolinha`);
+  for (let i = 0; i <= index; i++) {
+    bolinhas[i].classList.add('active');
+  }
+  for (let i = index + 1; i < bolinhas.length; i++) {
+    bolinhas[i].classList.remove('active');
+  }
+}
+
 // ======= ESTADO DO USUÁRIO =======
 onAuthStateChanged(auth, user => {
   if (user) showFichaList();
@@ -334,7 +352,15 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById('voltarSelecaoBtn').addEventListener('click', voltarParaSelecao);
 
   // Atualiza atributos ao digitar na linha de baixo
-  ['cor-val','men-val','ins-val','pre-val','con-val'].forEach(id => {
+  ['cor-val','men-val','ins-val','pre-val','con-val','cor-input','men-input','ins-input','pre-input','con-input'].forEach(id => {
+    const input = document.getElementById(id);
+    if(input){
+      input.addEventListener('input', updateCalculos);
+    }
+  });
+  
+  // Listeners para modificadores
+  ['pv-mod','san-mod','pe-mod','def-equip','def-bonus'].forEach(id => {
     const input = document.getElementById(id);
     if(input){
       input.addEventListener('input', updateCalculos);
@@ -344,6 +370,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // Adiciona listeners para equilíbrio e exposição
   document.getElementById('equilibrio').addEventListener('input', updateEquilibrio);
   document.getElementById('exposicao').addEventListener('input', updateExposicao);
+  
+  // Listeners para bolinhas
+  document.querySelectorAll('.morrendo-bolinha').forEach((bolinha, index) => {
+    bolinha.addEventListener('click', () => toggleBolinha('morrendo', index));
+  });
+  document.querySelectorAll('.enlouquecendo-bolinha').forEach((bolinha, index) => {
+    bolinha.addEventListener('click', () => toggleBolinha('enlouquecendo', index));
+  });
   
   // Inicializa barras
   updateEquilibrio();
