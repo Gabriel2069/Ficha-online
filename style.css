@@ -238,10 +238,16 @@ h1 {
   border: 1px solid rgba(127, 28, 255, 0.3);
   border-radius: 10px;
   padding: 10px;
-  margin-top: 10px;
+  margin: 10px auto 0 auto; /* Centralizado */
   width: 200px;
   text-align: center;
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); /* Sombra branca */
+  transition: 0.3s ease;
+}
+
+.sanidade-extra:hover {
+  transform: translateY(-3px); /* Salto */
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.8); /* Iluminação branca */
 }
 
 .linha-extra {
