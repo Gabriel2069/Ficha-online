@@ -269,9 +269,10 @@ function salvarFicha() {
   const campos = [
     'nome','idade','origem','ocupacao','marca','motivacao',
     'cor-val','men-val','ins-val','pre-val','con-val',
-    'pv-atual','pv-max','san-atual','san-max',
-    'pe-atual','pe-max','def-equip','def-bonus',
-    'equilibrio','exposicao'
+    'cor-input','men-input','ins-input','pre-input','con-input',
+    'pv-atual','pv-max','pv-mod','san-atual','san-max','san-mod',
+    'pe-atual','pe-max','pe-mod','def-equip','def-bonus',
+    'equilibrio','exposicao','barra-exposicao'
   ];
 
   const data = {};
