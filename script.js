@@ -144,6 +144,8 @@ async function openFicha(fichaId) {
   document.getElementById('fichas-list')?.remove();
   showFicha();
   updateCalculos();
+  listenFicha(fichaId); // 🔄 Atualização em tempo real
+
 }
 
 // ======= PERÍCIAS =======
@@ -406,3 +408,39 @@ document.addEventListener("DOMContentLoaded", () => {
   updateEquilibrio();
   updateExposicao();
 });
+
+// ======= SALVAMENTO AUTOMÁTICO =======
+let saveTimeout;
+function debounce(func, delay) {
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(func, delay);
+}
+
+function autoSave() {
+  salvarFicha();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Monitora qualquer mudança em inputs, selects ou textareas
+  const inputs = document.querySelectorAll('input, select, textarea');
+  inputs.forEach(el => {
+    el.addEventListener('input', () => debounce(autoSave, 2500)); // salva 2.5s depois de digitar
+  });
+});
+
+// ======= ATUALIZAÇÃO EM TEMPO REAL =======
+import { onSnapshot, doc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+function listenFicha(fichaId) {
+  const fichaRef = doc(db, "fichas", fichaId);
+  onSnapshot(fichaRef, (docSnap) => {
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      Object.keys(data).forEach(key => {
+        const el = document.getElementById(key);
+        if (el) el.value = data[key];
+      });
+      updateCalculos(); // Atualiza os cálculos e barras visuais
+    }
+  });
+}
