@@ -10,7 +10,10 @@
     <div id="auth">
         <h1>Login / Cadastro</h1>
         <input id="email" type="email" placeholder="Email"><br>
-        <input type="password" id="password" placeholder="Senha">
+        <div style="position:relative;">
+            <input type="password" id="password" placeholder="Senha" style="padding-right:40px;">
+            <span id="toggle-password" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;">👁️</span>
+        </div>
         <button id="btn-login">Login</button>
         <button id="btn-signup">Cadastrar</button>
     </div>
