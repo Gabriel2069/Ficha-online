@@ -74,7 +74,7 @@ async function showFichaList() {
     document.body.appendChild(listDiv);
   }
 
-  listDiv.innerHTML = `<h2 style="font-size:2rem;">Suas fichas</h2><div class="ficha-cards"></div>`;
+  listDiv.innerHTML = `<h2>Suas fichas</h2><div class="ficha-cards"></div>`;
   const cardsContainer = listDiv.querySelector(".ficha-cards");
 
   const user = auth.currentUser;
@@ -92,7 +92,6 @@ async function showFichaList() {
     card.className = "ficha-card";
     card.innerHTML = `
       <h3>${data.nome || "Sem nome"}</h3>
-      <p>Exp: ${data.exposicao || 0}</p>
     `;
     card.onclick = () => openFicha(docSnap.id);
     cardsContainer.appendChild(card);
@@ -271,6 +270,7 @@ function salvarFicha() {
     showNotification("Usuário não logado", "error");
     return;
   }
+
   const campos = [
     'nome','idade','origem','ocupacao','marca','motivacao',
     'cor-val','men-val','ins-val','pre-val','con-val',
@@ -278,11 +278,13 @@ function salvarFicha() {
     'pe-atual','pe-max','def-equip','def-bonus',
     'equilibrio','exposicao'
   ];
+
   const data = {};
   campos.forEach(id => {
     const el = document.getElementById(id);
     if (el) data[id] = el.value;
   });
+
   // Salva todas as perícias
   const periciasDiv = document.querySelectorAll('.pericias .coluna-pericia');
   periciasDiv.forEach(coluna => {
@@ -297,6 +299,7 @@ function salvarFicha() {
       }
     });
   });
+
   data.owner = user.uid;
   const fichaId = `${user.uid}-${data.nome || "semnome"}`;
   setDoc(doc(db, "fichas", fichaId), data)
@@ -325,17 +328,11 @@ function showTab(tabId) {
 // ======= BOLINHAS MORRENDO/ENLOUQUECENDO =======
 function toggleBolinha(type, index) {
   const bolinhas = document.querySelectorAll(`.${type}-bolinha`);
-  if (index === 0 && bolinhas[0].classList.contains('active')) {
-    // Se clicar na primeira e ela estiver ativa, desativa todas
-    bolinhas.forEach(b => b.classList.remove('active'));
-  } else {
-    // Ativa até o índice clicado
-    for (let i = 0; i <= index; i++) {
-      bolinhas[i].classList.add('active');
-    }
-    for (let i = index + 1; i < bolinhas.length; i++) {
-      bolinhas[i].classList.remove('active');
-    }
+  for (let i = 0; i <= index; i++) {
+    bolinhas[i].classList.add('active');
+  }
+  for (let i = index + 1; i < bolinhas.length; i++) {
+    bolinhas[i].classList.remove('active');
   }
 }
 
