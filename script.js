@@ -444,3 +444,11 @@ function listenFicha(fichaId) {
     }
   });
 }
+
+function highlightField(fieldId) {
+  const el = document.getElementById(fieldId);
+  if (!el) return;
+
+  el.classList.add("highlight");
+  setTimeout(() => el.classList.remove("highlight"), 600);
+}
