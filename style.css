@@ -40,7 +40,7 @@ h1 {
   border-radius: 16px;
   padding: 30px;
   width: 90%;
-  max-width: 500px; /* Maior */
+  max-width: 400px;
   box-shadow: 0 0 30px #000;
 }
 
@@ -146,7 +146,6 @@ h1 {
   margin: 10px;
   transition: all 0.3s ease;
   text-align: center;
-  margin-bottom: 10px; /* Espaço entre caixas */
 }
 
 .criterio-card:hover {
@@ -232,53 +231,6 @@ h1 {
   box-shadow: 0 0 30px rgba(0, 160, 255, 0.7);
 }
 
-/* === QUADRO EXTRA ABAIXO DE SANIDADE === */
-.sanidade-extra {
-  background: rgba(20, 20, 30, 0.85);
-  border: 1px solid rgba(127, 28, 255, 0.3);
-  border-radius: 10px;
-  padding: 10px;
-  margin: 10px auto 0 auto; /* Centralizado */
-  width: 200px;
-  text-align: center;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); /* Sombra branca */
-  transition: 0.3s ease;
-}
-
-.sanidade-extra:hover {
-  transform: translateY(-3px); /* Salto */
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.8); /* Iluminação branca */
-}
-
-.linha-extra {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-.bolinhas {
-  display: flex;
-  gap: 5px;
-}
-
-.morrendo-bolinha, .enlouquecendo-bolinha {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background: #333;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.morrendo-bolinha.active {
-  background: #550000; /* Vermelho escuro */
-}
-
-.enlouquecendo-bolinha.active {
-  background: #555500; /* Amarelo escuro */
-}
-
 /* === BARRA DE EXPOSIÇÃO COM NÍVEIS === */
 .exposicao-level {
   flex: 1;
@@ -361,10 +313,6 @@ h1 {
   margin-top: 10px;
 }
 
-.tab.active {
-  display: block;
-}
-
 .tab table {
   width: 100%;
   border-collapse: collapse;
@@ -404,15 +352,6 @@ input:focus {
   text-align: center;
 }
 
-.botoes button {
-  transition: 0.3s;
-}
-
-.botoes button:hover {
-  transform: translateY(-5px); /* Salto */
-  box-shadow: 0 0 20px rgba(127, 28, 255, 0.8); /* Iluminação */
-}
-
 /* === ANIMAÇÕES === */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-20px); }
@@ -438,21 +377,20 @@ input:focus {
 .notification {
   position: fixed;
   top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 20px;
   padding: 10px 20px;
   border-radius: 6px;
   color: #fff;
   font-weight: bold;
   z-index: 1000;
   opacity: 0;
-  transform: translateX(-50%) translateY(-10px);
+  transform: translateY(-10px);
   transition: all 0.3s ease;
 }
 
 .notification.show {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  transform: translateY(0);
 }
 
 .notification.success { background: #4caf50; }
