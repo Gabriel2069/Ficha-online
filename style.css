@@ -33,20 +33,20 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 15px; /* Aumentado */
   margin-top: 80px;
   background: rgba(25,25,25,0.95);
   border: 1px solid #333;
   border-radius: 16px;
-  padding: 30px;
+  padding: 40px; /* Aumentado */
   width: 90%;
-  max-width: 400px;
+  max-width: 500px; /* Aumentado */
   box-shadow: 0 0 30px #000;
 }
 
 #auth input {
-  width: 280px;
-  height: 38px;
+  width: 320px; /* Aumentado */
+  height: 42px; /* Aumentado */
   text-align: center;
   background: #121212;
   border: 1px solid #333;
@@ -60,9 +60,30 @@ h1 {
   box-shadow: 0 0 8px #6f00ff88;
 }
 
+.password-container {
+  position: relative;
+  width: 320px; /* Mesmo que input */
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 40px; /* Espaço para o ícone */
+}
+
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #fff;
+  font-size: 18px;
+  user-select: none;
+}
+
 #auth button {
-  width: 150px;
-  padding: 8px;
+  width: 180px; /* Aumentado */
+  padding: 10px; /* Aumentado */
   background: linear-gradient(135deg, #2b2b2b, #1a1a1a);
   border: 1px solid #444;
   border-radius: 6px;
@@ -93,6 +114,12 @@ h1 {
   padding: 20px;
 }
 
+.fichas-list h2 {
+  font-size: 2.5rem; /* Aumentado */
+  color: #e4e4e4;
+  margin-bottom: 20px;
+}
+
 .ficha-cards {
   display: flex;
   flex-wrap: wrap;
@@ -115,6 +142,12 @@ h1 {
   border-color: #6f00ff;
   transform: translateY(-3px);
   box-shadow: 0 0 10px #6f00ff33;
+}
+
+.ficha-card p {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-top: 5px;
 }
 
 .add-card {
@@ -438,20 +471,21 @@ input:focus {
 .notification {
   position: fixed;
   top: 20px;
-  right: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   padding: 10px 20px;
   border-radius: 6px;
   color: #fff;
   font-weight: bold;
   z-index: 1000;
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateX(-50%) translateY(-10px);
   transition: all 0.3s ease;
 }
 
 .notification.show {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0);
 }
 
 .notification.success { background: #4caf50; }
