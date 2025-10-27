@@ -272,7 +272,7 @@ function salvarFicha() {
     'cor-input','men-input','ins-input','pre-input','con-input',
     'pv-atual','pv-max','pv-mod','san-atual','san-max','san-mod',
     'pe-atual','pe-max','pe-mod','def-equip','def-bonus',
-    'equilibrio','exposicao','barra-exposicao'
+    'equilibrio','exposicao'
   ];
 
   const data = {};
