@@ -271,21 +271,18 @@ function salvarFicha() {
     showNotification("Usuário não logado", "error");
     return;
   }
-
   const campos = [
     'nome','idade','origem','ocupacao','marca','motivacao',
     'cor-val','men-val','ins-val','pre-val','con-val',
-    'pv-atual','pv-max','pv-mod','san-atual','san-max','san-mod',
-    'pe-atual','pe-max','pe-mod','def-equip','def-bonus',
+    'pv-atual','pv-max','san-atual','san-max',
+    'pe-atual','pe-max','def-equip','def-bonus',
     'equilibrio','exposicao'
   ];
-
   const data = {};
   campos.forEach(id => {
     const el = document.getElementById(id);
     if (el) data[id] = el.value;
   });
-
   // Salva todas as perícias
   const periciasDiv = document.querySelectorAll('.pericias .coluna-pericia');
   periciasDiv.forEach(coluna => {
@@ -300,7 +297,6 @@ function salvarFicha() {
       }
     });
   });
-
   data.owner = user.uid;
   const fichaId = `${user.uid}-${data.nome || "semnome"}`;
   setDoc(doc(db, "fichas", fichaId), data)
