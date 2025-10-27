@@ -10,7 +10,10 @@
     <div id="auth">
         <h1>Login / Cadastro</h1>
         <input id="email" type="email" placeholder="Email"><br>
-        <input type="password" id="password" placeholder="Senha">
+        <div class="password-container">
+            <input type="password" id="password" placeholder="Senha">
+            <span id="toggle-password" class="eye-icon">👁️</span>
+        </div>
         <button id="btn-login">Login</button>
         <button id="btn-signup">Cadastrar</button>
     </div>
@@ -80,27 +83,27 @@
                     <polygon points="100,10 190,70 155,180 45,180 10,70" fill="none" stroke="#6f00ff" stroke-width="2"/>
                     <circle cx="100" cy="10" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2">
                         <foreignObject x="80" y="0" width="40" height="40">
-                            <input id="cor-val" type="number" min="0" max="6" onchange="updateCalculos()" style="width:40px;height:40px;text-align:center;background:none;border:none;color:#fff;font-weight:bold;">
+                            <input id="cor-val" type="number" min="0" max="6" readonly onchange="updateCalculos()" style="width:40px;height:40px;text-align:center;background:none;border:none;color:#fff;font-weight:bold;">
                         </foreignObject>
                     </circle>
                     <circle cx="190" cy="70" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2">
                         <foreignObject x="170" y="50" width="40" height="40">
-                            <input id="men-val" type="number" min="0" max="6" onchange="updateCalculos()" style="width:40px;height:40px;text-align:center;background:none;border:none;color:#fff;font-weight:bold;">
+                            <input id="men-val" type="number" min="0" max="6" readonly onchange="updateCalculos()" style="width:40px;height:40px;text-align:center;background:none;border:none;color:#fff;font-weight:bold;">
                         </foreignObject>
                     </circle>
                     <circle cx="155" cy="180" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2">
                         <foreignObject x="135" y="160" width="40" height="40">
-                            <input id="ins-val" type="number" min="0" max="6" onchange="updateCalculos()" style="width:40px;height:40px;text-align:center;background:none;border:none;color:#fff;font-weight:bold;">
+                            <input id="ins-val" type="number" min="0" max="6" readonly onchange="updateCalculos()" style="width:40px;height:40px;text-align:center;background:none;border:none;color:#fff;font-weight:bold;">
                         </foreignObject>
                     </circle>
                     <circle cx="45" cy="180" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2">
                         <foreignObject x="25" y="160" width="40" height="40">
-                            <input id="pre-val" type="number" min="0" max="6" onchange="updateCalculos()" style="width:40px;height:40px;text-align:center;background:none;border:none;color:#fff;font-weight:bold;">
+                            <input id="pre-val" type="number" min="0" max="6" readonly onchange="updateCalculos()" style="width:40px;height:40px;text-align:center;background:none;border:none;color:#fff;font-weight:bold;">
                         </foreignObject>
                     </circle>
                     <circle cx="10" cy="70" r="20" fill="#1a1a1a" stroke="#6f00ff88" stroke-width="2">
                         <foreignObject x="-10" y="50" width="40" height="40">
-                            <input id="con-val" type="number" min="0" max="6" onchange="updateCalculos()" style="width:40px;height:40px;text-align:center;background:none;border:none;color:#fff;font-weight:bold;">
+                            <input id="con-val" type="number" min="0" max="6" readonly onchange="updateCalculos()" style="width:40px;height:40px;text-align:center;background:none;border:none;color:#fff;font-weight:bold;">
                         </foreignObject>
                     </circle>
                 </svg>
@@ -239,7 +242,4 @@
         </div>
     </div>
 
-      <script type="module" src="script.js"></script>
-    
-</body>
-</html>
+      <script type="module"
