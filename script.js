@@ -399,6 +399,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('.enlouquecendo-bolinha').forEach((bolinha, index) => {
     bolinha.addEventListener('click', () => toggleBolinha('enlouquecendo', index));
   });
+
   
   // Inicializa barras
   updateEquilibrio();
