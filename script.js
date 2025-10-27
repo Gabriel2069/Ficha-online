@@ -92,6 +92,7 @@ async function showFichaList() {
     card.className = "ficha-card";
     card.innerHTML = `
       <h3>${data.nome || "Sem nome"}</h3>
+      <p>Exp: ${data.exposicao || 0}</p>
     `;
     card.onclick = () => openFicha(docSnap.id);
     cardsContainer.appendChild(card);
@@ -166,26 +167,20 @@ function limitarAtributo(valor) {
 }
 
 function updateCalculos() {
-  const cor = limitarAtributo(+document.getElementById('cor-val').value);
-  const men = limitarAtributo(+document.getElementById('men-val').value);
-  const ins = limitarAtributo(+document.getElementById('ins-val').value);
-  const pre = limitarAtributo(+document.getElementById('pre-val').value);
-  const con = limitarAtributo(+document.getElementById('con-val').value);
+  const cor = limitarAtributo(+document.getElementById('cor-input').value);
+  const men = limitarAtributo(+document.getElementById('men-input').value);
+  const ins = limitarAtributo(+document.getElementById('ins-input').value);
+  const pre = limitarAtributo(+document.getElementById('pre-input').value);
+  const con = limitarAtributo(+document.getElementById('con-input').value);
   const exp = Math.min(+document.getElementById('exposicao').value, 10); // Limita a 10
   document.getElementById('exposicao').value = exp; // Garante no slider
 
+  // Sincroniza os valores do pentágono (readonly) com os inputs editáveis
   document.getElementById('cor-val').value = cor;
   document.getElementById('men-val').value = men;
   document.getElementById('ins-val').value = ins;
   document.getElementById('pre-val').value = pre;
   document.getElementById('con-val').value = con;
-
-  // Sincroniza os valores das bolas do pentágono com os inputs extras
-  document.getElementById('cor-input').value = cor;
-  document.getElementById('men-input').value = men;
-  document.getElementById('ins-input').value = ins;
-  document.getElementById('pre-input').value = pre;
-  document.getElementById('con-input').value = con;
 
   const expMap = [
     {pv:15, san:15, pe:5, def:10},
@@ -288,7 +283,8 @@ function salvarFicha() {
   // Salva todas as perícias
   const periciasDiv = document.querySelectorAll('.pericias .coluna-pericia');
   periciasDiv.forEach(coluna => {
-    const categoria = coluna.querySelector('h3').innerText.match(/\$(\w+)\$/)[1];
+    const categoria = coluna.querySelector('h3').innerText.match(/(\w+)\s*\$/)?.[1];
+    if (!categoria) return;
     const labels = coluna.querySelectorAll('label');
     data[categoria] = {};
     labels.forEach(label => {
@@ -328,11 +324,30 @@ function showTab(tabId) {
 // ======= BOLINHAS MORRENDO/ENLOUQUECENDO =======
 function toggleBolinha(type, index) {
   const bolinhas = document.querySelectorAll(`.${type}-bolinha`);
-  for (let i = 0; i <= index; i++) {
-    bolinhas[i].classList.add('active');
+  if (index === 0 && bolinhas[0].classList.contains('active')) {
+    // Se clicar na primeira e ela estiver ativa, desativar todas
+    bolinhas.forEach(b => b.classList.remove('active'));
+  } else {
+    // Ativar até o index
+    for (let i = 0; i <= index; i++) {
+      bolinhas[i].classList.add('active');
+    }
+    for (let i = index + 1; i < bolinhas.length; i++) {
+      bolinhas[i].classList.remove('active');
+    }
   }
-  for (let i = index + 1; i < bolinhas.length; i++) {
-    bolinhas[i].classList.remove('active');
+}
+
+// ======= TOGGLE SENHA =======
+function togglePassword() {
+  const passwordInput = document.getElementById('password');
+  const toggleIcon = document.getElementById('toggle-password');
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text';
+    toggleIcon.textContent = '🙈';
+  } else {
+    passwordInput.type = 'password';
+    toggleIcon.textContent = '👁️';
   }
 }
 
@@ -347,9 +362,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById('btn-signup').addEventListener('click', signup);
   document.getElementById('btn-salvar').addEventListener('click', salvarFicha);
   document.getElementById('voltarSelecaoBtn').addEventListener('click', voltarParaSelecao);
+  document.getElementById('toggle-password').addEventListener('click', togglePassword);
 
   // Atualiza atributos ao digitar na linha de baixo
-  ['cor-val','men-val','ins-val','pre-val','con-val','cor-input','men-input','ins-input','pre-input','con-input'].forEach(id => {
+  ['cor-input','men-input','ins-input','pre-input','con-input'].forEach(id => {
     const input = document.getElementById(id);
     if(input){
       input.addEventListener('input', updateCalculos);
