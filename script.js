@@ -74,7 +74,7 @@ async function showFichaList() {
     document.body.appendChild(listDiv);
   }
 
-  listDiv.innerHTML = `<h2>Suas fichas</h2><div class="ficha-cards"></div>`;
+  listDiv.innerHTML = `<h2 style="font-size:2rem;">Suas fichas</h2><div class="ficha-cards"></div>`;
   const cardsContainer = listDiv.querySelector(".ficha-cards");
 
   const user = auth.currentUser;
@@ -92,6 +92,7 @@ async function showFichaList() {
     card.className = "ficha-card";
     card.innerHTML = `
       <h3>${data.nome || "Sem nome"}</h3>
+      <p>Exp: ${data.exposicao || 0}</p>
     `;
     card.onclick = () => openFicha(docSnap.id);
     cardsContainer.appendChild(card);
@@ -274,8 +275,8 @@ function salvarFicha() {
   const campos = [
     'nome','idade','origem','ocupacao','marca','motivacao',
     'cor-val','men-val','ins-val','pre-val','con-val',
-    'pv-atual','pv-max','san-atual','san-max',
-    'pe-atual','pe-max','def-equip','def-bonus',
+    'pv-atual','pv-max','pv-mod','san-atual','san-max','san-mod',
+    'pe-atual','pe-max','pe-mod','def-equip','def-bonus',
     'equilibrio','exposicao'
   ];
 
@@ -288,7 +289,7 @@ function salvarFicha() {
   // Salva todas as perícias
   const periciasDiv = document.querySelectorAll('.pericias .coluna-pericia');
   periciasDiv.forEach(coluna => {
-    const categoria = coluna.querySelector('h3').innerText.match(/\((\w+)\)/)[1];
+    const categoria = coluna.querySelector('h3').innerText.match(/\$(\w+)\$/)[1];
     const labels = coluna.querySelectorAll('label');
     data[categoria] = {};
     labels.forEach(label => {
@@ -328,11 +329,17 @@ function showTab(tabId) {
 // ======= BOLINHAS MORRENDO/ENLOUQUECENDO =======
 function toggleBolinha(type, index) {
   const bolinhas = document.querySelectorAll(`.${type}-bolinha`);
-  for (let i = 0; i <= index; i++) {
-    bolinhas[i].classList.add('active');
-  }
-  for (let i = index + 1; i < bolinhas.length; i++) {
-    bolinhas[i].classList.remove('active');
+  if (index === 0 && bolinhas[0].classList.contains('active')) {
+    // Se clicar na primeira e ela estiver ativa, desativa todas
+    bolinhas.forEach(b => b.classList.remove('active'));
+  } else {
+    // Ativa até o índice clicado
+    for (let i = 0; i <= index; i++) {
+      bolinhas[i].classList.add('active');
+    }
+    for (let i = index + 1; i < bolinhas.length; i++) {
+      bolinhas[i].classList.remove('active');
+    }
   }
 }
 
