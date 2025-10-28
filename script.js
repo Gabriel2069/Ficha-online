@@ -480,5 +480,3 @@ function updateEquilibrio() {
   barraEquilibrio.style.background = val < 0 ? '#ff0000' : val > 0 ? '#ffff00' : '#000';
 }
 
-// Inicializa e adiciona listener
-sliderEquilibrio.addEventListener('input', updateEquilibrio);
