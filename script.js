@@ -482,24 +482,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Barra equilíbrio - visual bem perceptível
 const sliderEquilibrio = document.getElementById('equilibrio');
 const barraEquilibrio = document.getElementById('barra-equilibrio');
+const containerEquilibrio = document.getElementById('barra-equilibrio-container');
 
-function updateEquilibrioVisual() {
-  const val = parseFloat(sliderEquilibrio.value); // -10 a 10
-  const percent = (val + 10) / 20 * 100; // converte para 0% a 100%
+function updateEquilibrio() {
+  const val = parseInt(sliderEquilibrio.value) || 0;
+  const width = containerEquilibrio.offsetWidth;
+  
+  // Calcula posição da linha dentro da barra (0 = -10, width = +10)
+  const pos = ((val + 10) / 20) * width; 
+  barraEquilibrio.style.left = `${pos}px`;
 
-  // Gradiente linear: vermelho à esquerda, amarelo à direita
-  barraEquilibrio.style.background = `linear-gradient(to right, 
-    #ff0000 ${percent}%, 
-    #ffff00 ${percent}%)`;
+  // muda cor dependendo do lado
+  barraEquilibrio.style.background = val < 0 ? '#ff0000' : val > 0 ? '#ffff00' : '#000';
 }
 
-// Atualiza ao mover o slider
-sliderEquilibrio.addEventListener('input', updateEquilibrioVisual);
-
-// Inicializa visual
-updateEquilibrioVisual();
-
-
+// Inicializa e adiciona listener
+updateEquilibrio();
+sliderEquilibrio.addEventListener('input', updateEquilibrio);
