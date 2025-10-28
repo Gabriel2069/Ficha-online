@@ -150,6 +150,7 @@ async function openFicha(fichaId) {
   document.getElementById('fichas-list')?.remove();
   showFicha();
   updateCalculos();
+  updateExposicao(); // 👈 Garante que a barra apareça ao abrir
   listenFicha(fichaId); // 🔄 Atualização em tempo real
 
 }
