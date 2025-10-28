@@ -153,9 +153,7 @@ async function openFicha(fichaId) {
   updateExposicao(); // 👈 Garante que a barra apareça ao abrir
   listenFicha(fichaId); // 🔄 Atualização em tempo real
 
-}
-
-  // 🔹 Carrega as perícias
+   // 🔹 Carrega as perícias
   if (data.pericias) {
     document.querySelectorAll('.pericia').forEach(input => {
       const key = input.dataset.pericia;
@@ -164,6 +162,9 @@ async function openFicha(fichaId) {
       }
     });
   }
+}
+
+ 
 
 // ======= CALCULOS =======
 function limitarAtributo(valor) {
