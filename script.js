@@ -146,14 +146,8 @@ async function openFicha(fichaId) {
     // Altera o título da aba
     document.title = `Ficha (${data.nome || "Sem nome"})`;
   }
-
-  document.getElementById('fichas-list')?.remove();
-  showFicha();
-  updateCalculos();
-  updateExposicao(); // 👈 Garante que a barra apareça ao abrir
-  listenFicha(fichaId); // 🔄 Atualização em tempo real
-
-   // 🔹 Carrega as perícias
+  
+  // 🔹 Carrega as perícias
   if (data.pericias) {
     document.querySelectorAll('.pericia').forEach(input => {
       const key = input.dataset.pericia;
@@ -162,8 +156,14 @@ async function openFicha(fichaId) {
       }
     });
   }
-}
+  
+  document.getElementById('fichas-list')?.remove();
+  showFicha();
+  updateCalculos();
+  updateExposicao(); // 👈 Garante que a barra apareça ao abrir
+  listenFicha(fichaId); // 🔄 Atualização em tempo real
 
+}
  
 
 // ======= CALCULOS =======
