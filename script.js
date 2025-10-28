@@ -248,6 +248,24 @@ function updateBarras() {
 }
 
 // === Equilíbrio e Exposição ===
+function updateEquilibrio() {
+  const val = parseFloat(document.getElementById('equilibrio').value) || 0;
+  const left = document.querySelector('.equilibrio-left');
+  const right = document.querySelector('.equilibrio-right');
+
+  // valor do slider entre 0 e 100, 50 = centro
+  const percent = Math.min(Math.max(val, 0), 100);
+
+  if (percent <= 50) {
+    // slider à esquerda do centro
+    left.style.flex = (50 - percent) / 50; // aumenta vermelho
+    right.style.flex = 1; // mantém direito inteiro
+  } else {
+    // slider à direita do centro
+    left.style.flex = 0.5; // metade esquerda fixa
+    right.style.flex = (percent - 50) / 50 + 0.5; // aumenta amarelo
+  }
+}
 
 function updateExposicao() {
   updateCalculos();
@@ -464,19 +482,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// Barra equilibrio
 const sliderEquilibrio = document.getElementById('equilibrio');
 const barraEquilibrio = document.getElementById('barra-equilibrio');
-const containerEquilibrio = document.getElementById('barra-equilibrio-container');
 
-function updateEquilibrio() {
-  const val = parseInt(sliderEquilibrio.value) || 0;
-  const width = containerEquilibrio.offsetWidth;
-  
-  // Calcula posição da linha dentro da barra (0 = -10, width = +10)
-  const pos = ((val + 10) / 20) * width; 
-  barraEquilibrio.style.left = `${pos}px`;
+sliderEquilibrio.addEventListener('input', () => {
+  const val = parseFloat(sliderEquilibrio.value); // -10 a 10
+  const percent = (val + 10) / 20 * 100; // 0% a 100%
+  barraEquilibrio.style.background = `linear-gradient(to right, #ff0000 0%, #000 ${50 - percent/2}%, #ffff00 ${50 + percent/2}%, #ffffff 100%)`;
+});
 
-  // muda cor dependendo do lado
-  barraEquilibrio.style.background = val < 0 ? '#ff0000' : val > 0 ? '#ffff00' : '#000';
-}
-
+// Inicializa visual da barra
+sliderEquilibrio.dispatchEvent(new Event('input'));
