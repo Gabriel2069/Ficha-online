@@ -312,9 +312,9 @@ h1 {
   background: #555500; /* Amarelo escuro */
 }
 
-/* BARRA DE EQUILÍBRIO */
+/* BARRA DE EQUILÍBRIO MELHORADA */
 #barra-equilibrio {
-  display: flex;
+  position: relative;
   width: 100%;
   height: 22px;
   border-radius: 12px;
@@ -324,20 +324,26 @@ h1 {
   box-shadow: 0 0 10px rgba(127, 28, 255, 0.3);
 }
 
-.equilibrio-left, .equilibrio-right {
-  height: 100%;
-  transition: flex 0.3s ease, background 0.3s ease;
+#barra-equilibrio::before,
+#barra-equilibrio::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  transition: all 0.3s ease;
 }
 
-/* Degradê esquerdo (vermelho para preto) */
-.equilibrio-left {
-  background: linear-gradient(90deg, #ff0000, #000000);
+#barra-equilibrio::before {
+  left: 0;
+  background: linear-gradient(90deg, #ff0000, #000000); /* vermelho -> preto */
 }
 
-/* Degradê direito (amarelo para branco) */
-.equilibrio-right {
-  background: linear-gradient(90deg, #ffff00, #ffffff);
+#barra-equilibrio::after {
+  right: 0;
+  background: linear-gradient(90deg, #ffff00, #ffffff); /* amarelo -> branco */
 }
+
 
 /* === BARRA DE EXPOSIÇÃO COM NÍVEIS === */
 .exposicao-level {
