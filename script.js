@@ -142,6 +142,9 @@ async function openFicha(fichaId) {
     if (data.INS) preencherPericias('INS', data.INS);
     if (data.PRE) preencherPericias('PRE', data.PRE);
     if (data.CON) preencherPericias('CON', data.CON);
+
+    // Altera o título da aba
+    document.title = `Ficha (${data.nome || "Sem nome"})`;
   }
 
   document.getElementById('fichas-list')?.remove();
