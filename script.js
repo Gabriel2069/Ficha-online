@@ -269,11 +269,11 @@ function updateEquilibrio() {
 
 function updateExposicao() {
   updateCalculos();
-  const val = Math.min(parseInt(document.getElementById('exposicao').value) || 0, 10); // Limita a 10
+  const val = Math.min(parseInt(document.getElementById('exposicao').value) || 1, 10); // Limita a 10
   document.getElementById('exposicao').value = val;
   const barra = document.getElementById('barra-exposicao');
   barra.innerHTML = '';  // Limpa
-  for (let i = 0; i < 10; i++) {
+  for (let i = 1; i < 10; i++) {
     const level = document.createElement('div');
     level.className = 'exposicao-level';
     if (i <= val) level.classList.add('active');  // Destaca até o nível atual
