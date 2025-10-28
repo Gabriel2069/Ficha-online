@@ -144,9 +144,17 @@
         <div class="linhas">
             <label>Equilíbrio: <input id="equilibrio" type="range" min="-10" max="10" value="0"></label>
             <div id="barra-equilibrio">
-              <div class="equilibrio-left"></div>
-              <div class="equilibrio-right"></div>
+            <div id="barra-equilibrio-container" style="position: relative; width: 300px; height: 20px; background: #ccc; margin-bottom: 10px;">
+              <div id="barra-equilibrio" style="position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: #ff0000;"></div>
             </div>
+              <div id="labels-equilibrio" style="display: flex; justify-content: space-between; width: 300px;">
+                <span>-10</span>
+                <span>-5</span>
+                <span>0</span>
+                <span>5</span>
+                <span>10</span>
+            </div>
+            <input type="range" id="equilibrio" min="-10" max="10" step="1" value="0" style="width: 300px;">
 
 
             <label>Exposição: <input id="exposicao" type="range" min="0" max="10" value="0"></label>
