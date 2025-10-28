@@ -371,7 +371,7 @@ function togglePassword() {
     toggleIcon.textContent = '🙈';
   } else {
     passwordInput.type = 'password';
-    toggleIcon.textContent = '👁️';
+    toggleIcon.textContent = '👀';
   }
 }
 
