@@ -143,7 +143,11 @@
         <!-- Linhas: Equilíbrio e Exposição -->
         <div class="linhas">
             <label>Equilíbrio: <input id="equilibrio" type="range" min="-10" max="10" value="0"></label>
-            <div id="barra-equilibrio" style="position:relative;height:20px;margin:5px 0;background: linear-gradient(to right, #550000 0%, #000 50%, #fffacd 50%, #ffff00 100%);"></div>
+            <div id="barra-equilibrio">
+              <div class="equilibrio-left"></div>
+              <div class="equilibrio-right"></div>
+            </div>
+
 
             <label>Exposição: <input id="exposicao" type="range" min="0" max="10" value="0"></label>
             <div id="barra-exposicao" style="position:relative;height:20px;margin:5px 0;display:flex;"></div>
