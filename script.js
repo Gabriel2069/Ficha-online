@@ -94,7 +94,7 @@ async function showFichaList() {
       <h3>${data.nome || "Sem nome"}</h3>
       <p>Exp: ${data.exposicao || 0}</p>
     `;
-    card.onclick = () => window.open(`ficha.html?id=${docSnap.id}`, "_blank");
+    card.onclick = () => window.open(`index.html?id=${docSnap.id}`, "_blank");
     cardsContainer.appendChild(card);
   });
 
