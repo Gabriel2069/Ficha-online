@@ -490,9 +490,30 @@ document.addEventListener("DOMContentLoaded", () => {
     listenFicha(fichaId);
   } else {
     // Se não tem id, mostra lista de fichas depois do login
-    onAuthStateChanged(auth, user => {
-      if (user) showFichaList();
-    });
+onAuthStateChanged(auth, user => {
+    const params = new URLSearchParams(window.location.search);
+    const fichaId = params.get("id");
+
+    if (!user) {
+        // usuário não logado → mostra login
+        document.getElementById('auth').style.display = 'block';
+        document.getElementById('ficha')?.style.display = 'none';
+        document.getElementById('fichas-list')?.remove();
+        return;
+    }
+
+    if (fichaId) {
+        // se veio com id → mostra ficha e não mostra lista
+        document.getElementById('auth').style.display = 'none';
+        document.getElementById('fichas-list')?.remove();
+        document.getElementById('ficha').style.display = 'block';
+        openFicha(fichaId);
+        listenFicha(fichaId);
+    } else {
+        // sem id → mostra lista de fichas
+        showFichaList();
+    }
+   });
   }
 
   // Inicializa listeners gerais (login, salvar, toggle senha etc)
