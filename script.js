@@ -164,8 +164,6 @@ async function openFicha(fichaId) {
       }
     });
   }
-}
-
 
 // ======= CALCULOS =======
 function limitarAtributo(valor) {
