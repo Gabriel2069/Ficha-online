@@ -155,18 +155,17 @@ async function openFicha(fichaId) {
 
 }
 
-// ======= PERÍCIAS =======
-function preencherPericias(categoria, valores) {
-  const coluna = Array.from(document.querySelectorAll('.coluna-pericia'))
-                      .find(c => c.querySelector('h3').innerText.includes(categoria));
-  if (!coluna) return;
-
-  Object.keys(valores).forEach(nome => {
-    const label = Array.from(coluna.querySelectorAll('label'))
-                       .find(l => l.childNodes[0].textContent.trim().replace(':','') === nome);
-    if (label) label.querySelector('input').value = valores[nome];
-  });
+  // 🔹 Carrega as perícias
+  if (data.pericias) {
+    document.querySelectorAll('.pericia').forEach(input => {
+      const key = input.dataset.pericia;
+      if (data.pericias[key] !== undefined) {
+        input.value = data.pericias[key];
+      }
+    });
+  }
 }
+
 
 // ======= CALCULOS =======
 function limitarAtributo(valor) {
@@ -306,20 +305,10 @@ function salvarFicha() {
     if (el) data[id] = el.value;
   });
 
-  // Salva todas as perícias
-  const periciasDiv = document.querySelectorAll('.pericias .coluna-pericia');
-  periciasDiv.forEach(coluna => {
-    const categoria = coluna.querySelector('h3').innerText.match(/(\w+)\s*\$/)?.[1];
-    if (!categoria) return;
-    const labels = coluna.querySelectorAll('label');
-    data[categoria] = {};
-    labels.forEach(label => {
-      const input = label.querySelector('input');
-      if(input){
-        const nome = label.childNodes[0].textContent.trim().replace(':','');
-        data[categoria][nome] = input.value;
-      }
-    });
+   // 🔹 Coleta todas as perícias
+  document.querySelectorAll('.pericia').forEach(input => {
+    const key = input.dataset.pericia;
+    data.pericias[key] = input.value || 0;
   });
 
   data.owner = user.uid;
@@ -457,30 +446,44 @@ import { onSnapshot, doc as firestoreDoc } from "https://www.gstatic.com/firebas
 function listenFicha(fichaId) {
   const fichaRef = firestoreDoc(db, "fichas", fichaId);
   onSnapshot(fichaRef, (docSnap) => {
-    if (docSnap.exists()) {
-      const data = docSnap.data();
-      Object.keys(data).forEach(key => {
+    if (!docSnap.exists()) return;
+
+    const data = docSnap.data();
+
+    // Atualiza campos simples
+    for (const key in data) {
+      const value = data[key];
+
+      if (typeof value === "object" && value !== null) {
+        // Atualiza objetos aninhados, tipo pericias, atributos, etc.
+        for (const subKey in value) {
+          const fieldId = `${key}_${subKey}`; // exemplo: pericias_acrobacia
+          const el = document.getElementById(fieldId);
+          if (el && el.value != value[subKey]) {
+            el.value = value[subKey];
+            highlightField(fieldId);
+          }
+        }
+      } else {
         const el = document.getElementById(key);
-        if (el) el.value = data[key];
-      });
-      updateCalculos(); // Atualiza os cálculos e barras visuais
+        if (el && el.value != value) {
+          el.value = value;
+          highlightField(key);
+        }
+      }
     }
+
+    updateCalculos(); // Atualiza cálculos visuais
   });
 }
 
-function highlightField(fieldId) {
-  const el = document.getElementById(fieldId);
-  if (!el) return;
-
-  el.classList.add("highlight");
-  setTimeout(() => el.classList.remove("highlight"), 600);
-}
 
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const fichaId = params.get("id");
   if (fichaId) {
     openFicha(fichaId);
+    listenFicha(fichaId); // <- adiciona essa linha!
   }
 });
 
