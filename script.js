@@ -499,5 +499,4 @@ function updateEquilibrio() {
 }
 
 // Inicializa e adiciona listener
-updateEquilibrio();
 sliderEquilibrio.addEventListener('input', updateEquilibrio);
