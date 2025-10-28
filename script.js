@@ -482,3 +482,30 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+const sliderEquilibrio = document.getElementById('equilibrio');
+const leftBar = document.querySelector('.equilibrio-left');
+const rightBar = document.querySelector('.equilibrio-right');
+
+function updateEquilibrio() {
+  const val = parseFloat(sliderEquilibrio.value); // -10 a 10
+  const center = 0; // centro da barra
+  const range = 10; // valor máximo
+
+  if (val < center) {
+    // slider à esquerda: vermelho cresce
+    const ratio = (center - val) / range; // 0 a 1
+    leftBar.style.flex = ratio;
+    rightBar.style.flex = 1 - ratio;
+  } else {
+    // slider à direita: amarelo cresce
+    const ratio = (val - center) / range; // 0 a 1
+    leftBar.style.flex = 1 - ratio;
+    rightBar.style.flex = ratio;
+  }
+}
+
+// Atualiza ao mover o slider
+sliderEquilibrio.addEventListener('input', updateEquilibrio);
+
+// Inicializa
+updateEquilibrio();
