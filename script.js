@@ -480,11 +480,56 @@ function listenFicha(fichaId) {
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const fichaId = params.get("id");
+
   if (fichaId) {
+    // Se veio com id, mostra ficha e esconde login/lista
+    document.getElementById('auth').style.display = 'none';
+    document.getElementById('fichas-list')?.remove();
+    showFicha();
     openFicha(fichaId);
-    listenFicha(fichaId); // <- adiciona essa linha!
+    listenFicha(fichaId);
+  } else {
+    // Se não tem id, mostra lista de fichas depois do login
+    onAuthStateChanged(auth, user => {
+      if (user) showFichaList();
+    });
   }
+
+  // Inicializa listeners gerais (login, salvar, toggle senha etc)
+  document.getElementById('btn-login')?.addEventListener('click', login);
+  document.getElementById('btn-signup')?.addEventListener('click', signup);
+  document.getElementById('btn-salvar')?.addEventListener('click', salvarFicha);
+  document.getElementById('voltarSelecaoBtn')?.addEventListener('click', voltarParaSelecao);
+  document.getElementById('toggle-password')?.addEventListener('click', togglePassword);
+
+  // Listeners de inputs e sliders
+  ['cor-input','men-input','ins-input','pre-input','con-input'].forEach(id => {
+    const input = document.getElementById(id);
+    if(input) input.addEventListener('input', updateCalculos);
+  });
+  ['pv-mod','san-mod','pe-mod','def-equip','def-bonus'].forEach(id => {
+    const input = document.getElementById(id);
+    if(input) input.addEventListener('input', updateCalculos);
+  });
+  ['pv-atual','san-atual','pe-atual'].forEach(id => {
+    const input = document.getElementById(id);
+    if(input) input.addEventListener('input', () => updateBarraVisual(id.split('-')[0]));
+  });
+  document.getElementById('equilibrio')?.addEventListener('input', updateEquilibrio);
+  document.getElementById('exposicao')?.addEventListener('input', updateExposicao);
+
+  document.querySelectorAll('.morrendo-bolinha').forEach((bolinha, index) => {
+    bolinha.addEventListener('click', () => toggleBolinha('morrendo', index));
+  });
+  document.querySelectorAll('.enlouquecendo-bolinha').forEach((bolinha, index) => {
+    bolinha.addEventListener('click', () => toggleBolinha('enlouquecendo', index));
+  });
+
+  // Inicializa barras
+  updateEquilibrio();
+  updateExposicao();
 });
+
 
 // Barra equilibrio
 const sliderEquilibrio = document.getElementById('equilibrio');
