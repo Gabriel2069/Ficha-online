@@ -429,10 +429,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ======= ATUALIZAÇÃO EM TEMPO REAL =======
-import { onSnapshot, doc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+import { onSnapshot, doc as firestoreDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
 function listenFicha(fichaId) {
-  const fichaRef = doc(db, "fichas", fichaId);
+  const fichaRef = firestoreDoc(db, "fichas", fichaId);
   onSnapshot(fichaRef, (docSnap) => {
     if (docSnap.exists()) {
       const data = docSnap.data();
