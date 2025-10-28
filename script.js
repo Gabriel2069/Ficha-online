@@ -482,30 +482,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// Barra equilibrio
 const sliderEquilibrio = document.getElementById('equilibrio');
-const leftBar = document.querySelector('.equilibrio-left');
-const rightBar = document.querySelector('.equilibrio-right');
+const barraEquilibrio = document.getElementById('barra-equilibrio');
 
-function updateEquilibrio() {
+sliderEquilibrio.addEventListener('input', () => {
   const val = parseFloat(sliderEquilibrio.value); // -10 a 10
-  const center = 0; // centro da barra
-  const range = 10; // valor máximo
+  const percent = (val + 10) / 20 * 100; // 0% a 100%
+  barraEquilibrio.style.background = `linear-gradient(to right, #ff0000 0%, #000 ${50 - percent/2}%, #ffff00 ${50 + percent/2}%, #ffffff 100%)`;
+});
 
-  if (val < center) {
-    // slider à esquerda: vermelho cresce
-    const ratio = (center - val) / range; // 0 a 1
-    leftBar.style.flex = ratio;
-    rightBar.style.flex = 1 - ratio;
-  } else {
-    // slider à direita: amarelo cresce
-    const ratio = (val - center) / range; // 0 a 1
-    leftBar.style.flex = 1 - ratio;
-    rightBar.style.flex = ratio;
-  }
-}
+// Inicializa visual da barra
+sliderEquilibrio.dispatchEvent(new Event('input'));
 
-// Atualiza ao mover o slider
-sliderEquilibrio.addEventListener('input', updateEquilibrio);
-
-// Inicializa
-updateEquilibrio();
