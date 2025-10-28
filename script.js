@@ -94,7 +94,7 @@ async function showFichaList() {
       <h3>${data.nome || "Sem nome"}</h3>
       <p>Exp: ${data.exposicao || 0}</p>
     `;
-    card.onclick = () => openFicha(docSnap.id);
+    card.onclick = () => window.open(`ficha.html?id=${docSnap.id}`, "_blank");
     cardsContainer.appendChild(card);
   });
 
@@ -452,3 +452,12 @@ function highlightField(fieldId) {
   el.classList.add("highlight");
   setTimeout(() => el.classList.remove("highlight"), 600);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const fichaId = params.get("id");
+  if (fichaId) {
+    openFicha(fichaId);
+  }
+});
+
