@@ -203,7 +203,8 @@ function updateCalculos() {
     {pv:60, san:60, pe:50, def:28},
   ];
 
-  const maxVals = expMap[exp] || expMap[0];
+  const index = Math.max(exp - 1, 0); // garante que nunca seja negativo
+  const maxVals = expMap[index] || expMap[0];
   const pvMod = +document.getElementById('pv-mod').value || 0;
   const sanMod = +document.getElementById('san-mod').value || 0;
   const peMod = +document.getElementById('pe-mod').value || 0;
