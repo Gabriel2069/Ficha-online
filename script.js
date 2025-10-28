@@ -424,7 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Monitora qualquer mudança em inputs, selects ou textareas
   const inputs = document.querySelectorAll('input, select, textarea');
   inputs.forEach(el => {
-    el.addEventListener('input', () => debounce(autoSave, 2500)); // salva 2.5s depois de digitar
+    el.addEventListener('input', () => debounce(autoSave, 10500)); // salva 10.5s depois de digitar
   });
 });
 
