@@ -130,7 +130,10 @@ async function openFicha(fichaId) {
     const data = docSnap.data();
     Object.keys(data).forEach(key => {
       const el = document.getElementById(key);
-      if (el) el.value = data[key];
+      if (el && el.value != data[key]) {   // só muda se for diferente
+        el.value = data[key];
+        highlightField(key);     // chama destaque
+      }
     });
 
     // Preenche as perícias
