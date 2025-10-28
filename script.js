@@ -494,3 +494,4 @@ sliderEquilibrio.addEventListener('input', () => {
 
 // Inicializa visual da barra
 sliderEquilibrio.dispatchEvent(new Event('input'));
+
