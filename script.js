@@ -146,25 +146,26 @@ async function openFicha(fichaId) {
     // Altera o título da aba
     document.title = `Ficha (${data.nome || "Sem nome"})`;
   }
-  
-  // 🔹 Carrega as perícias
-  if (data.pericias) {
-    document.querySelectorAll('.pericia').forEach(input => {
-      const key = input.dataset.pericia;
-      if (data.pericias[key] !== undefined) {
-        input.value = data.pericias[key];
-      }
-    });
-  }
-  
+
   document.getElementById('fichas-list')?.remove();
   showFicha();
   updateCalculos();
-  updateExposicao(); // 👈 Garante que a barra apareça ao abrir
   listenFicha(fichaId); // 🔄 Atualização em tempo real
 
 }
- 
+
+// ======= PERÍCIAS =======
+function preencherPericias(categoria, valores) {
+  const coluna = Array.from(document.querySelectorAll('.coluna-pericia'))
+                      .find(c => c.querySelector('h3').innerText.includes(categoria));
+  if (!coluna) return;
+
+  Object.keys(valores).forEach(nome => {
+    const label = Array.from(coluna.querySelectorAll('label'))
+                       .find(l => l.childNodes[0].textContent.trim().replace(':','') === nome);
+    if (label) label.querySelector('input').value = valores[nome];
+  });
+}
 
 // ======= CALCULOS =======
 function limitarAtributo(valor) {
@@ -202,8 +203,7 @@ function updateCalculos() {
     {pv:60, san:60, pe:50, def:28},
   ];
 
-  const index = Math.max(exp - 1, 0); // garante que nunca seja negativo
-  const maxVals = expMap[index] || expMap[0];
+  const maxVals = expMap[exp] || expMap[0];
   const pvMod = +document.getElementById('pv-mod').value || 0;
   const sanMod = +document.getElementById('san-mod').value || 0;
   const peMod = +document.getElementById('pe-mod').value || 0;
@@ -269,11 +269,11 @@ function updateEquilibrio() {
 
 function updateExposicao() {
   updateCalculos();
-  const val = Math.min(parseInt(document.getElementById('exposicao').value) || 1, 10); // Limita a 10
+  const val = Math.min(parseInt(document.getElementById('exposicao').value) || 0, 10); // Limita a 10
   document.getElementById('exposicao').value = val;
   const barra = document.getElementById('barra-exposicao');
   barra.innerHTML = '';  // Limpa
-  for (let i = 1; i < 10; i++) {
+  for (let i = 0; i < 10; i++) {
     const level = document.createElement('div');
     level.className = 'exposicao-level';
     if (i <= val) level.classList.add('active');  // Destaca até o nível atual
@@ -304,10 +304,20 @@ function salvarFicha() {
     if (el) data[id] = el.value;
   });
 
-   // 🔹 Coleta todas as perícias
-  document.querySelectorAll('.pericia').forEach(input => {
-    const key = input.dataset.pericia;
-    data.pericias[key] = input.value || 0;
+  // Salva todas as perícias
+  const periciasDiv = document.querySelectorAll('.pericias .coluna-pericia');
+  periciasDiv.forEach(coluna => {
+    const categoria = coluna.querySelector('h3').innerText.match(/(\w+)\s*\$/)?.[1];
+    if (!categoria) return;
+    const labels = coluna.querySelectorAll('label');
+    data[categoria] = {};
+    labels.forEach(label => {
+      const input = label.querySelector('input');
+      if(input){
+        const nome = label.childNodes[0].textContent.trim().replace(':','');
+        data[categoria][nome] = input.value;
+      }
+    });
   });
 
   data.owner = user.uid;
@@ -361,7 +371,7 @@ function togglePassword() {
     toggleIcon.textContent = '🙈';
   } else {
     passwordInput.type = 'password';
-    toggleIcon.textContent = '👀';
+    toggleIcon.textContent = '👁️';
   }
 }
 
@@ -445,112 +455,32 @@ import { onSnapshot, doc as firestoreDoc } from "https://www.gstatic.com/firebas
 function listenFicha(fichaId) {
   const fichaRef = firestoreDoc(db, "fichas", fichaId);
   onSnapshot(fichaRef, (docSnap) => {
-    if (!docSnap.exists()) return;
-
-    const data = docSnap.data();
-
-    // Atualiza campos simples
-    for (const key in data) {
-      const value = data[key];
-
-      if (typeof value === "object" && value !== null) {
-        // Atualiza objetos aninhados, tipo pericias, atributos, etc.
-        for (const subKey in value) {
-          const fieldId = `${key}_${subKey}`; // exemplo: pericias_acrobacia
-          const el = document.getElementById(fieldId);
-          if (el && el.value != value[subKey]) {
-            el.value = value[subKey];
-            highlightField(fieldId);
-          }
-        }
-      } else {
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      Object.keys(data).forEach(key => {
         const el = document.getElementById(key);
-        if (el && el.value != value) {
-          el.value = value;
-          highlightField(key);
-        }
-      }
+        if (el) el.value = data[key];
+      });
+      updateCalculos(); // Atualiza os cálculos e barras visuais
     }
-
-    updateCalculos(); // Atualiza cálculos visuais
   });
 }
 
+function highlightField(fieldId) {
+  const el = document.getElementById(fieldId);
+  if (!el) return;
+
+  el.classList.add("highlight");
+  setTimeout(() => el.classList.remove("highlight"), 600);
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const fichaId = params.get("id");
-
   if (fichaId) {
-    // Se veio com id, mostra ficha e esconde login/lista
-    document.getElementById('auth').style.display = 'none';
-    document.getElementById('fichas-list')?.remove();
-    showFicha();
     openFicha(fichaId);
-    listenFicha(fichaId);
-  } else {
-    // Se não tem id, mostra lista de fichas depois do login
-onAuthStateChanged(auth, user => {
-    const params = new URLSearchParams(window.location.search);
-    const fichaId = params.get("id");
-
-    if (!user) {
-        // usuário não logado → mostra login
-        document.getElementById('auth').style.display = 'block';
-        document.getElementById('ficha')?.style.display = 'none';
-        document.getElementById('fichas-list')?.remove();
-        return;
-    }
-
-    if (fichaId) {
-        // se veio com id → mostra ficha e não mostra lista
-        document.getElementById('auth').style.display = 'none';
-        document.getElementById('fichas-list')?.remove();
-        document.getElementById('ficha').style.display = 'block';
-        openFicha(fichaId);
-        listenFicha(fichaId);
-    } else {
-        // sem id → mostra lista de fichas
-        showFichaList();
-    }
-   });
   }
-
-  // Inicializa listeners gerais (login, salvar, toggle senha etc)
-  document.getElementById('btn-login')?.addEventListener('click', login);
-  document.getElementById('btn-signup')?.addEventListener('click', signup);
-  document.getElementById('btn-salvar')?.addEventListener('click', salvarFicha);
-  document.getElementById('voltarSelecaoBtn')?.addEventListener('click', voltarParaSelecao);
-  document.getElementById('toggle-password')?.addEventListener('click', togglePassword);
-
-  // Listeners de inputs e sliders
-  ['cor-input','men-input','ins-input','pre-input','con-input'].forEach(id => {
-    const input = document.getElementById(id);
-    if(input) input.addEventListener('input', updateCalculos);
-  });
-  ['pv-mod','san-mod','pe-mod','def-equip','def-bonus'].forEach(id => {
-    const input = document.getElementById(id);
-    if(input) input.addEventListener('input', updateCalculos);
-  });
-  ['pv-atual','san-atual','pe-atual'].forEach(id => {
-    const input = document.getElementById(id);
-    if(input) input.addEventListener('input', () => updateBarraVisual(id.split('-')[0]));
-  });
-  document.getElementById('equilibrio')?.addEventListener('input', updateEquilibrio);
-  document.getElementById('exposicao')?.addEventListener('input', updateExposicao);
-
-  document.querySelectorAll('.morrendo-bolinha').forEach((bolinha, index) => {
-    bolinha.addEventListener('click', () => toggleBolinha('morrendo', index));
-  });
-  document.querySelectorAll('.enlouquecendo-bolinha').forEach((bolinha, index) => {
-    bolinha.addEventListener('click', () => toggleBolinha('enlouquecendo', index));
-  });
-
-  // Inicializa barras
-  updateEquilibrio();
-  updateExposicao();
 });
-
 
 // Barra equilibrio
 const sliderEquilibrio = document.getElementById('equilibrio');
@@ -564,4 +494,3 @@ sliderEquilibrio.addEventListener('input', () => {
 
 // Inicializa visual da barra
 sliderEquilibrio.dispatchEvent(new Event('input'));
-
